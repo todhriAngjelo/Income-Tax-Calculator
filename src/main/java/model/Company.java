@@ -1,4 +1,4 @@
-package dataManagePackage.Receipt;
+package model;
 
 public class Company {
 	private String name;

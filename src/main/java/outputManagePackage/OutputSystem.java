@@ -1,6 +1,6 @@
 package outputManagePackage;
-import dataManagePackage.*;
-import dataManagePackage.Receipt.Receipt;
+import model.*;
+import model.Receipt;
 
 import java.awt.Dialog.ModalExclusionType;
 import java.io.FileNotFoundException;

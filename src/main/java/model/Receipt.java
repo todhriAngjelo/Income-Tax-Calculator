@@ -1,4 +1,4 @@
-package dataManagePackage.Receipt;
+package model;
 
 import java.math.BigDecimal;
 
@@ -36,7 +36,7 @@ public class Receipt {
 	public Company getCompany(){
 		return company;
 	}
-	
+
 	public String toString(){
 		return "ID: "+id
 				+"\nDate: "+date

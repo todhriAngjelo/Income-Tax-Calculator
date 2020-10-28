@@ -1,5 +1,5 @@
 package gui;
-import dataManagePackage.Database;
+import model.Database;
 import outputManagePackage.OutputSystem;
 
 import java.awt.Color;

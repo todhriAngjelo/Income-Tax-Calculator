@@ -1,5 +1,4 @@
-package dataManagePackage;
-import dataManagePackage.Receipt.*;
+package model;
 import inputManagePackage.*;
 import outputManagePackage.*;
 

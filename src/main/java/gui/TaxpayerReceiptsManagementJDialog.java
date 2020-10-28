@@ -1,10 +1,9 @@
 package gui;
-import dataManagePackage.*;
 
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import dataManagePackage.Database;
+import model.Database;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;

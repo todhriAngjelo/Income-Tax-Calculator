@@ -1,5 +1,5 @@
 package gui;
-import dataManagePackage.*;
+import model.*;
 
 import java.awt.EventQueue;
 import java.awt.Font;

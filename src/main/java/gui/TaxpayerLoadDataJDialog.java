@@ -1,5 +1,5 @@
 package gui;
-import dataManagePackage.*;
+import model.*;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;

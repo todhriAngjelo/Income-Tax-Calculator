@@ -1,6 +1,5 @@
 package inputManagePackage;
-import dataManagePackage.*;
-import dataManagePackage.Receipt.*;
+import model.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
