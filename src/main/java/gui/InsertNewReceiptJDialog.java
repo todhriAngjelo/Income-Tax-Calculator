@@ -20,12 +20,8 @@ import java.awt.event.KeyEvent;
 
 public class InsertNewReceiptJDialog extends JDialog {
 
-	private int taxpayerID;
-	
-	
 	public InsertNewReceiptJDialog(final int taxpayerID) {
-		this.taxpayerID = taxpayerID;
-		
+
 		setResizable(false);
 		setBounds(100, 100, 310, 530);
 		getContentPane().setLayout(null);
@@ -186,7 +182,7 @@ public class InsertNewReceiptJDialog extends JDialog {
 						&& !amountTextField.getText().equals("") && !companyTextField.getText().equals("") && !countryTextField.getText().equals("")
 						&& !cityTextField.getText().equals("") && !streetTextField.getText().equals("") && !numberTextField.getText().equals("")){
 
-					Receipt newReceipt = ReceiptFactory.createNewReceipt(kindComboBox.getSelectedItem().toString(), receiptIdTextField.getText(),
+					Receipt newReceipt = new Receipt( kindComboBox.getSelectedItem().toString(), receiptIdTextField.getText(),
 							dateTextField.getText(), amountTextField.getText(), companyTextField.getText(),
 							countryTextField.getText(), cityTextField.getText(), streetTextField.getText(), numberTextField.getText());
 					Database.getTaxpayerFromArrayList(taxpayerID).addReceiptToList(newReceipt);

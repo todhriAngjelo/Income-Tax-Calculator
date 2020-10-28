@@ -19,15 +19,13 @@ import java.awt.Color;
 
 public class TaxpayerLoadDataJDialog extends JDialog {
 	
-	private JList<String> taxpayersAfmInfoFilesJList;
+	private final JList<String> taxpayersAfmInfoFilesJList;
 
 	private String afmInfoFilesFolderPath;
-	private JFrame appMainWindow;
-	
-	
+
+
 	public TaxpayerLoadDataJDialog(final JFrame appMainWindow) {
-		this.appMainWindow = appMainWindow;
-		
+
 		setResizable(false);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setType(Type.POPUP);
@@ -115,7 +113,7 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 		}
 		
 		taxpayersAfmInfoFilesJList.setModel(new AbstractListModel() {
-			String[] values = jlistValues;
+			final String[] values = jlistValues;
 			public int getSize() {
 				return values.length;
 			}

@@ -2,14 +2,15 @@ package dataManagePackage.Receipt;
 
 import java.math.BigDecimal;
 
-public abstract class Receipt {
+public class Receipt {
 	protected String kind;
 	protected String id;
 	protected String date;
 	protected double amount;
 	protected Company company;
 	
-	public Receipt(String id, String date, String amount, String name, String country, String city, String street, String number){
+	public Receipt(String kind, String id, String date, String amount, String name, String country, String city, String street, String number){
+		this.kind = kind;
 		this.id = id;
 		this.date = date;
 		this.amount = Double.parseDouble(amount);
