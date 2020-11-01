@@ -143,13 +143,13 @@ public class OutputSystem {
 		outputStream.println("Name: "+taxpayer.getName());
 		outputStream.println("AFM: "+taxpayer.getAFM());
 		outputStream.println("Income: "+taxpayer.getIncome());
-		outputStream.println("Basic Tax: "+taxpayer.getBasicTax());
-		if (taxpayer.getTaxInxrease()!=0){
-			outputStream.println("Tax Increase: "+taxpayer.getTaxInxrease());
+		outputStream.println("Basic Tax: "+taxpayer.getTax());
+		if (taxpayer.getTaxIncrease()!=0){
+			outputStream.println("Tax Increase: "+taxpayer.getTaxIncrease());
 		}else{
 			outputStream.println("Tax Decrease: "+taxpayer.getTaxDecrease());
 		}
-		outputStream.println("Total Tax: "+taxpayer.getTotalTax());
+		outputStream.println("Total Tax: "+taxpayer.getFinalTax());
 		outputStream.println("Total Receipts Amount: "+taxpayer.getTotalReceiptsAmount());
 		outputStream.println("Entertainment: "+taxpayer.getEntertainmentReceiptsTotalAmount());
 		outputStream.println("Basic: "+taxpayer.getBasicReceiptsTotalAmount());
@@ -183,13 +183,13 @@ public class OutputSystem {
 		outputStream.println("<Name> "+taxpayer.getName()+" </Name>");
 		outputStream.println("<AFM> "+taxpayer.getAFM()+" </AFM>");
 		outputStream.println("<Income> "+taxpayer.getIncome()+" </Income>");
-		outputStream.println("<BasicTax> "+taxpayer.getBasicTax()+" </BasicTax>");
-		if (taxpayer.getTaxInxrease()!=0){
-			outputStream.println("<TaxIncrease> "+taxpayer.getTaxInxrease()+" </TaxIncrease>");
+		outputStream.println("<BasicTax> "+taxpayer.getTax()+" </BasicTax>");
+		if (taxpayer.getTaxIncrease()!=0){
+			outputStream.println("<TaxIncrease> "+taxpayer.getTaxIncrease()+" </TaxIncrease>");
 		}else{
 			outputStream.println("<TaxDecrease> "+taxpayer.getTaxDecrease()+" </TaxDecrease>");
 		}
-		outputStream.println("<TotalTax> "+taxpayer.getTotalTax()+" </TotalTax>");
+		outputStream.println("<TotalTax> "+taxpayer.getFinalTax()+" </TotalTax>");
 		outputStream.println("<Receipts> "+taxpayer.getTotalReceiptsAmount()+" </Receipts>");
 		outputStream.println("<Entertainment> "+taxpayer.getEntertainmentReceiptsTotalAmount()+" </Entertainment>");
 		outputStream.println("<Basic> "+taxpayer.getBasicReceiptsTotalAmount()+" </Basic>");
@@ -229,12 +229,12 @@ public class OutputSystem {
 		DefaultCategoryDataset taxAnalysisBarChartDataset = new DefaultCategoryDataset();
 		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
 		
-		String taxVariationType = taxpayer.getTaxInxrease()!=0? "Tax Increase" : "Tax Decrease";
-		double taxVariationAmount = taxpayer.getTaxInxrease()!=0? taxpayer.getTaxInxrease() : taxpayer.getTaxDecrease()*(-1);
+		String taxVariationType = taxpayer.getTaxIncrease()!=0? "Tax Increase" : "Tax Decrease";
+		double taxVariationAmount = taxpayer.getTaxIncrease()!=0? taxpayer.getTaxIncrease() : taxpayer.getTaxDecrease()*(-1);
 		
-		taxAnalysisBarChartDataset.setValue(taxpayer.getBasicTax(), "Tax", "Basic Tax");
+		taxAnalysisBarChartDataset.setValue(taxpayer.getTax(), "Tax", "Basic Tax");
 		taxAnalysisBarChartDataset.setValue(taxVariationAmount, "Tax", taxVariationType);
-		taxAnalysisBarChartDataset.setValue(taxpayer.getTotalTax(), "Tax", "Total Tax");
+		taxAnalysisBarChartDataset.setValue(taxpayer.getFinalTax(), "Tax", "Total Tax");
 
 		JFreeChart taxAnalysisJFreeChart = ChartFactory.createBarChart("Tax Analysis Bar Chart", "",  "Tax Analysis in $", taxAnalysisBarChartDataset, PlotOrientation.VERTICAL, true, true, false);
 
