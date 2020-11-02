@@ -28,24 +28,24 @@ public class Taxpayer {
 	public double calculateTax() {
 		double tax;
 		double totalIncome = this.income;
-		int [][] incomeLimits = this.familyStatus.getIncomeLimits();
-		double [] basicTax = this.familyStatus.getBasicTax();;
-		double [] rates = this.familyStatus.getRates();;
+		int[] incomeLimits = this.familyStatus.getIncomeLimits();
+		double[] basicTax = this.familyStatus.getBasicTax();
+		double[] rates = this.familyStatus.getRates();
 
-		if ( totalIncome < incomeLimits[0][1] ) {
+		if ( totalIncome < incomeLimits[0] ) {
 			tax = (rates[0]) * totalIncome;
 		}
-		else if ( totalIncome < incomeLimits[1][1] ) {
-			tax = basicTax[1] + ( (rates[1]) * (totalIncome - incomeLimits[1][0]) );
+		else if ( totalIncome < incomeLimits[1] ) {
+			tax = basicTax[1] + ( (rates[1]) * (totalIncome - incomeLimits[0]) );
 		}
-		else if ( totalIncome < incomeLimits[2][1] ) {
-			tax = basicTax[2] + ( (rates[2]) * (totalIncome - incomeLimits[2][0]) );
+		else if ( totalIncome < incomeLimits[2] ) {
+			tax = basicTax[2] + ( (rates[2]) * (totalIncome - incomeLimits[1]) );
 		}
-		else if ( totalIncome < incomeLimits[3][1] ) {
-			tax = basicTax[3] + ( (rates[3]) * (totalIncome - incomeLimits[3][0]) );
+		else if ( totalIncome < incomeLimits[3] ) {
+			tax = basicTax[3] + ( (rates[3]) * (totalIncome - incomeLimits[2]) );
 		}
 		else {
-			tax = basicTax[4] + ( (rates[4]) * (totalIncome - incomeLimits[3][1]) );
+			tax = basicTax[4] + ( (rates[4]) * (totalIncome - incomeLimits[3]) );
 		}
 		
 		return tax;

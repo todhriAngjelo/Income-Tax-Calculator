@@ -5,11 +5,11 @@ import utils.ApplicationConstants;
 public class FamilyStatus {
 
     private final String familyStatus;
-    private final int [][] incomeLimits;
+    private final int [] incomeLimits;
     private final double [] basicTax;
     private final double [] rates;
 
-    private FamilyStatus(String familyStatus, int[][] incomeLimits, double[] basicTax, double[] rates){
+    private FamilyStatus(String familyStatus, int[] incomeLimits, double[] basicTax, double[] rates){
         this.familyStatus = familyStatus;
         this.incomeLimits = incomeLimits;
         this.basicTax = basicTax;
@@ -20,7 +20,7 @@ public class FamilyStatus {
         return familyStatus;
     }
 
-    public int[][] getIncomeLimits() {
+    public int[] getIncomeLimits() {
         return incomeLimits;
     }
 
