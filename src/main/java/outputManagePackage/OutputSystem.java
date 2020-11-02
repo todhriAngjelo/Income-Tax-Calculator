@@ -17,6 +17,7 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import utils.ApplicationConstants;
 
 public class OutputSystem {
 	
@@ -140,22 +141,22 @@ public class OutputSystem {
 			System.out.println("Problem opening: "+folderSavePath+"//"+taxpayer.getAFM()+"_LOG.txt");
 		}
 		
-		outputStream.println("Name: "+taxpayer.getName());
-		outputStream.println("AFM: "+taxpayer.getAFM());
-		outputStream.println("Income: "+taxpayer.getIncome());
-		outputStream.println("Basic Tax: "+taxpayer.getTax());
+		outputStream.println("Name: " + taxpayer.getName());
+		outputStream.println("AFM: " + taxpayer.getAFM());
+		outputStream.println("Income: " + taxpayer.getIncome());
+		outputStream.println("Basic Tax: " + taxpayer.getTax());
 		if (taxpayer.getTaxIncrease()!=0){
-			outputStream.println("Tax Increase: "+taxpayer.getTaxIncrease());
+			outputStream.println("Tax Increase: " + taxpayer.getTaxIncrease());
 		}else{
-			outputStream.println("Tax Decrease: "+taxpayer.getTaxDecrease());
+			outputStream.println("Tax Decrease: " + taxpayer.getTaxDecrease());
 		}
-		outputStream.println("Total Tax: "+taxpayer.getFinalTax());
-		outputStream.println("Total Receipts Amount: "+taxpayer.getTotalReceiptsAmount());
-		outputStream.println("Entertainment: "+taxpayer.getEntertainmentReceiptsTotalAmount());
-		outputStream.println("Basic: "+taxpayer.getBasicReceiptsTotalAmount());
-		outputStream.println("Travel: "+taxpayer.getTravelReceiptsTotalAmount());
-		outputStream.println("Health: "+taxpayer.getHealthReceiptsTotalAmount());
-		outputStream.println("Other: "+taxpayer.getOtherReceiptsTotalAmount());
+		outputStream.println("Total Tax: " + taxpayer.getFinalTax());
+		outputStream.println("Total Receipts Amount: " + taxpayer.getTotalReceiptsAmount());
+		outputStream.println("Entertainment: " + taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.ENTERTAINMENT_RECEIPT));
+		outputStream.println("Basic: " + taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.BASIC_RECEIPT));
+		outputStream.println("Travel: " + taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.TRAVEL_RECEIPT));
+		outputStream.println("Health: " + taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.HEALTH_RECEIPT));
+		outputStream.println("Other: " + taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.OTHER_RECEIPT));
 		
 		outputStream.close();
 		
@@ -191,11 +192,11 @@ public class OutputSystem {
 		}
 		outputStream.println("<TotalTax> "+taxpayer.getFinalTax()+" </TotalTax>");
 		outputStream.println("<Receipts> "+taxpayer.getTotalReceiptsAmount()+" </Receipts>");
-		outputStream.println("<Entertainment> "+taxpayer.getEntertainmentReceiptsTotalAmount()+" </Entertainment>");
-		outputStream.println("<Basic> "+taxpayer.getBasicReceiptsTotalAmount()+" </Basic>");
-		outputStream.println("<Travel> "+taxpayer.getTravelReceiptsTotalAmount()+" </Travel>");
-		outputStream.println("<Health> "+taxpayer.getHealthReceiptsTotalAmount()+" </Health>");
-		outputStream.println("<Other> "+taxpayer.getOtherReceiptsTotalAmount()+" </Other>");
+		outputStream.println("<Entertainment> "+taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.ENTERTAINMENT_RECEIPT)+" </Entertainment>");
+		outputStream.println("<Basic> "+taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.BASIC_RECEIPT)+" </Basic>");
+		outputStream.println("<Travel> "+taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.TRAVEL_RECEIPT)+" </Travel>");
+		outputStream.println("<Health> "+taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.HEALTH_RECEIPT)+" </Health>");
+		outputStream.println("<Other> "+taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.OTHER_RECEIPT)+" </Other>");
 		
 		outputStream.close();
 		
@@ -206,11 +207,11 @@ public class OutputSystem {
 		receiptPieChartDataset = new DefaultPieDataset();
 		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
 		
-		receiptPieChartDataset.setValue("Basic", taxpayer.getBasicReceiptsTotalAmount());
-		receiptPieChartDataset.setValue("Entertainment", taxpayer.getEntertainmentReceiptsTotalAmount());
-		receiptPieChartDataset.setValue("Travel", taxpayer.getTravelReceiptsTotalAmount());
-		receiptPieChartDataset.setValue("Health", taxpayer.getHealthReceiptsTotalAmount());
-		receiptPieChartDataset.setValue("Other", taxpayer.getOtherReceiptsTotalAmount());
+		receiptPieChartDataset.setValue("Basic", taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.BASIC_RECEIPT));
+		receiptPieChartDataset.setValue("Entertainment", taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.ENTERTAINMENT_RECEIPT));
+		receiptPieChartDataset.setValue("Travel", taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.TRAVEL_RECEIPT));
+		receiptPieChartDataset.setValue("Health", taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.HEALTH_RECEIPT));
+		receiptPieChartDataset.setValue("Other", taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.OTHER_RECEIPT));
 		
 		receiptPieJFreeChart = ChartFactory.createPieChart("Receipt Pie Chart", receiptPieChartDataset);
 		piePlot = (PiePlot)receiptPieJFreeChart.getPlot();

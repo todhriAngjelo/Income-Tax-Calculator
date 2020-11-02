@@ -8,6 +8,13 @@ public class ApplicationConstants {
     public static final String SINGLE = "single";
     public static final String HEAD_OF_HOUSEHOLD = "head of household";
 
+    //Receipt Kinds
+    public static final String BASIC_RECEIPT = "basic";
+    public static final String ENTERTAINMENT_RECEIPT = "entertainment";
+    public static final String TRAVEL_RECEIPT = "travel";
+    public static final String HEALTH_RECEIPT = "health";
+    public static final String OTHER_RECEIPT = "other";
+
     // Income limits based on Family status
     public static final int [] INCOME_LIMITS_MARRIED_FILING_JOINTLY = new int[] { 36080, 90000, 143350, 254240 };
     public static final int [] INCOME_LIMITS_MARRIED_FILING_SEPARATELY = new int[] { 18040, 71680, 90000, 127120 };
