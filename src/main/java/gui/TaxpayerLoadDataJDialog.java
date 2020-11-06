@@ -1,5 +1,4 @@
 package gui;
-import model.*;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,6 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JLabel;
 import java.awt.Color;
+
+import model.Database;
+
 
 public class TaxpayerLoadDataJDialog extends JDialog {
 	
@@ -69,8 +71,8 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 		
 		loadDataFromSelectedAfmInfoFilesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List<String> afmInfoFilesListToLoad = (List<String>) taxpayersAfmInfoFilesJList.getSelectedValuesList();
-				
+				List<String> afmInfoFilesListToLoad = taxpayersAfmInfoFilesJList.getSelectedValuesList();
+
 				if (afmInfoFilesListToLoad.size() > 0){
 					String confirmDialogText = "Fortwsh dedomenwn forologoumenwn apo ta akoloutha arxeia:\n";
 					for (String afmInfoFileName : afmInfoFilesListToLoad){
@@ -80,10 +82,10 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 					
 					int dialogResult = JOptionPane.showConfirmDialog (null, confirmDialogText, "Epivevaiwsh", JOptionPane.YES_NO_OPTION);
 					if(dialogResult == JOptionPane.YES_OPTION){
-						Database.proccessTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
+						Database.processTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
 						JLabel totalLoadedTaxpayersJLabel = (JLabel)appMainWindow.getContentPane().getComponent(1);
 						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getTaxpayersArrayListSize()));
-						
+						System.out.println(Database.getTaxpayersArrayListSize());
 						dispose();
 					}
 				}

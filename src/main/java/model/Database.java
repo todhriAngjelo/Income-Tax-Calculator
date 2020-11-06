@@ -9,8 +9,12 @@ import java.util.List;
 
 public class Database {
 	private static String taxpayersInfoFilesPath;
-	private static ArrayList<Taxpayer> taxpayersArrayList = new ArrayList<Taxpayer>();
-	
+	private static ArrayList<Taxpayer> taxpayersArrayList = new ArrayList<>();
+
+	public static void setTaxpayersArrayList(ArrayList<Taxpayer> taxpayersArrayList) {
+		Database.taxpayersArrayList = taxpayersArrayList;
+	}
+
 	public static void setTaxpayersInfoFilesPath(String taxpayersInfoFilesPath){
 		Database.taxpayersInfoFilesPath = taxpayersInfoFilesPath;
 	}
@@ -19,10 +23,14 @@ public class Database {
 		return Database.taxpayersInfoFilesPath;
 	}
 	
-	public static void proccessTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles){
+	public static void processTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles){
 		InputSystem.addTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, taxpayersAfmInfoFiles);
 	}
-	
+
+	public static ArrayList<Taxpayer> getTaxpayersArrayList() {
+		return taxpayersArrayList;
+	}
+
 	public static void addTaxpayerToList(Taxpayer taxpayer){
 		taxpayersArrayList.add(taxpayer);
 	}
@@ -41,7 +49,7 @@ public class Database {
 	
 	public static String getTaxpayerNameAfmValuesPairList(int index){
 		Taxpayer taxpayer = taxpayersArrayList.get(index);
-		return taxpayer.getName() + " | " + taxpayer.getAFM();
+		return taxpayer.getName() + " | " + taxpayer.getAfm();
 	}
 	
 	public static String[] getTaxpayersNameAfmValuesPairList(){
@@ -49,7 +57,7 @@ public class Database {
 		
 		int c = 0;
 		for (Taxpayer taxpayer : taxpayersArrayList){
-			taxpayersNameAfmValuesPairList[c++] = taxpayer.getName() + " | " + taxpayer.getAFM();
+			taxpayersNameAfmValuesPairList[c++] = taxpayer.getName() + " | " + taxpayer.getAfm();
 		}
 		
 		return taxpayersNameAfmValuesPairList;
@@ -64,7 +72,7 @@ public class Database {
          };
 		
 		for (File file : taxpayersInfoFilesPathFileObject.listFiles(fileNameFilter)){
-			if (!file.getName().contains(taxpayersArrayList.get(index).getAFM())) continue;
+			if (!file.getName().contains(taxpayersArrayList.get(index).getAfm())) continue;
 			
 			if (file.getName().toLowerCase().endsWith(".txt")){
 				OutputSystem.saveUpdatedTaxpayerTxtInputFile(file.getAbsolutePath(), index);

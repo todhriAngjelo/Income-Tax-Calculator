@@ -56,7 +56,7 @@ public class OutputSystem {
 		
 		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
 		outputStream.println("Name: "+taxpayer.getName());
-		outputStream.println("AFM: "+taxpayer.getAFM());
+		outputStream.println("AFM: "+taxpayer.getAfm());
 		outputStream.println("Status: "+taxpayer.getFamilyStatus());
 		outputStream.println("Income: "+taxpayer.getIncome());
 		
@@ -95,7 +95,7 @@ public class OutputSystem {
 		
 		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
 		outputStream.println("<Name> "+taxpayer.getName()+" </Name>");
-		outputStream.println("<AFM> "+taxpayer.getAFM()+" </AFM>");
+		outputStream.println("<AFM> "+taxpayer.getAfm()+" </AFM>");
 		outputStream.println("<Status> "+taxpayer.getFamilyStatus()+" </Status>");
 		outputStream.println("<Income> "+taxpayer.getIncome()+" </Income>");
 		
@@ -133,16 +133,16 @@ public class OutputSystem {
 				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "\" + taxpayer.getAFM() + \"_LOG.txt"));
 			}
 			else{
-				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "//" + taxpayer.getAFM() + "_LOG.txt"));
+				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "//" + taxpayer.getAfm() + "_LOG.txt"));
 			}
 		}
 		catch(FileNotFoundException e)
 		{
-			System.out.println("Problem opening: "+folderSavePath+"//"+taxpayer.getAFM()+"_LOG.txt");
+			System.out.println("Problem opening: "+folderSavePath+"//"+taxpayer.getAfm()+"_LOG.txt");
 		}
 		
 		outputStream.println("Name: " + taxpayer.getName());
-		outputStream.println("AFM: " + taxpayer.getAFM());
+		outputStream.println("AFM: " + taxpayer.getAfm());
 		outputStream.println("Income: " + taxpayer.getIncome());
 		outputStream.println("Basic Tax: " + taxpayer.getTax());
 		if (taxpayer.getTaxIncrease()!=0){
@@ -173,16 +173,16 @@ public class OutputSystem {
 				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "\" + taxpayer.getAFM() + \"_LOG.xml"));
 			}
 			else{
-				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "//" + taxpayer.getAFM() + "_LOG.xml"));
+				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "//" + taxpayer.getAfm() + "_LOG.xml"));
 			}
 		}
 		catch(FileNotFoundException e)
 		{
-			System.out.println("Problem opening: "+folderSavePath+"//"+taxpayer.getAFM()+"_LOG.xml");
+			System.out.println("Problem opening: "+folderSavePath+"//"+taxpayer.getAfm()+"_LOG.xml");
 		}
 		
 		outputStream.println("<Name> "+taxpayer.getName()+" </Name>");
-		outputStream.println("<AFM> "+taxpayer.getAFM()+" </AFM>");
+		outputStream.println("<AFM> "+taxpayer.getAfm()+" </AFM>");
 		outputStream.println("<Income> "+taxpayer.getIncome()+" </Income>");
 		outputStream.println("<BasicTax> "+taxpayer.getTax()+" </BasicTax>");
 		if (taxpayer.getTaxIncrease()!=0){

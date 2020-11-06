@@ -1,0 +1,16 @@
+Name: Apostolos Zarras
+AFM: 130456093
+Status: Married Filing Jointly
+Income: 22570
+Receipts:
+
+Receipt ID: 1
+Date: 25/2/2014
+Kind: Basic
+Amount: 2000
+Company: Hand Made Clothes
+Country: Greece
+City: Ioannina
+Street: Kaloudi
+Number: 10
+

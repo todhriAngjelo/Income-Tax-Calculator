@@ -1,5 +1,9 @@
 package inputManagePackage;
-import model.*;
+
+import model.Taxpayer;
+import model.Database;
+import model.Receipt;
+import utils.ApplicationErrors;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,6 +20,8 @@ public class InputSystem {
 			}
 			else if (afmInfoFile.endsWith(".xml")){
 				loadTaxpayersDataFromXmlFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
+			} else {
+				throw new IllegalArgumentException(ApplicationErrors.LOAD_FILE_ERROR);
 			}
 		}
 	}

@@ -8,18 +8,19 @@ public class Taxpayer {
 	private String afm;
 	private FamilyStatus familyStatus;
 	private double income;
-	private double Tax;
+	private double tax;
 	private double taxIncrease;
 	private double taxDecrease;
 	private double finalTax;
 	private ArrayList<Receipt> receipts;
-	
-	public Taxpayer(String name, String afm, String familyStatus, String income){
-		this.name = name;
-		this.afm = afm;
-		this.familyStatus = FamilyStatus.getFamilyStatusInstance(familyStatus);
-		this.income = Double.parseDouble(income);
-		this.Tax = calculateTax();
+
+
+	public Taxpayer(String name, String afm, String familyStatus, String income) {
+		this.name = name.trim().replace("\n", "");
+		this.afm = afm.trim().replace("\n", "");
+		this.familyStatus = FamilyStatus.getFamilyStatusInstance(familyStatus.trim().replace("\n", ""));
+		this.income = Double.parseDouble(income.trim().replace("\n", ""));
+		this.tax = calculateTax();
 		taxIncrease = 0;
 		taxDecrease = 0;
 		receipts = new ArrayList<>();
@@ -50,26 +51,28 @@ public class Taxpayer {
 		
 		return tax;
 	}
-	
-	public String toString(){
+
+	@Override
+	public String toString() {
 		return "Name: "+name
 				+"\nAFM: "+afm
-				+"\nStatus: "+familyStatus
+				+"\nStatus: "+ familyStatus.getFamilyStatus()
 				+"\nIncome: "+String.format("%.2f", income)
-				+"\nBasicTax: "+String.format("%.2f", Tax)
-				+"\nTaxIncrease: "+String.format("%.2f", taxIncrease)
-				+"\nTaxDecrease: "+String.format("%.2f", taxDecrease);
+				+"\nTax: "+String.format("%.2f", tax)
+				+"\nTax Increase: "+String.format("%.2f", taxIncrease)
+				+"\nTax Decrease: "+String.format("%.2f", taxDecrease)
+				+"\nFinal Tax: "+String.format("%.2f", finalTax);
 	}
 	
-	public Receipt getReceipt(int receiptID){
+	public Receipt getReceipt(int receiptID) {
 		return receipts.get(receiptID);
 	}
 	
-	public ArrayList<Receipt> getReceiptsArrayList(){
+	public ArrayList<Receipt> getReceiptsArrayList() {
 		return receipts;
 	}
 	
-	public String[] getReceiptsList(){
+	public String[] getReceiptsList() {
 		String[] receiptsList = new String[receipts.size()];
 		
 		int c = 0;
@@ -79,7 +82,8 @@ public class Taxpayer {
 		
 		return receiptsList;
 	}
-	public double getReceiptsTotalAmountByType(String receiptType){
+
+	public double getReceiptsTotalAmountByType(String receiptType) {
 		double totalAmount = 0;
 
 		for (Receipt receipt : receipts){
@@ -90,7 +94,7 @@ public class Taxpayer {
 		return totalAmount;
 	}
 
-	public double getTotalReceiptsAmount(){
+	public double getTotalReceiptsAmount() {
 		double totalReceiptsAmount = 0;
 		
 		for (Receipt receipt : receipts){
@@ -100,51 +104,63 @@ public class Taxpayer {
 		return (new BigDecimal(totalReceiptsAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 	
-	public String getName(){
+	public String getName() {
 		return name;
 	}
 	
-	public String getAFM(){
+	public String getAfm() {
 		return afm;
 	}
 	
-	public String getFamilyStatus(){
+	public String getFamilyStatus() {
 		return familyStatus.getFamilyStatus();
 	}
+
+	public ArrayList<Receipt> getReceipts()  {
+		return receipts;
+	}
 	
-	public double getIncome(){
+	public double getIncome() {
 		return (new BigDecimal(income).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 	
-	public double getTax(){
-		return (new BigDecimal(Tax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+	public double getTax() {
+		return (new BigDecimal(tax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 	
-	public double getTaxIncrease(){
+	public double getTaxIncrease() {
 		return (new BigDecimal(taxIncrease).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 	
-	public double getTaxDecrease(){
+	public double getTaxDecrease() {
 		return (new BigDecimal(taxDecrease).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 	
-	public double getFinalTax(){
+	public double getFinalTax() {
 		return (new BigDecimal(finalTax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 	
-	public void addReceiptToList(Receipt receipt){
+	public void addReceiptToList(Receipt receipt) {
 		receipts.add(receipt);
 		
 		calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
 	}
 	
-	public void removeReceiptFromList(int index){
+	public void removeReceiptFromList(int index) {
 		receipts.remove(index);
 		
 		calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
 	}
-	
-	public void calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts(){
+
+	public void setReceipts(ArrayList<Receipt> receipts)  {
+		this.receipts = receipts;
+	}
+
+	public void setTaxIncrease(double taxIncrease) {
+		this.taxIncrease = taxIncrease;
+	}
+
+	public void calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts() {
 		double totalReceiptsAmount = 0;
 		for (Receipt receipt : receipts){
 			totalReceiptsAmount += receipt.getAmount();
@@ -152,19 +168,19 @@ public class Taxpayer {
 		
 		taxIncrease = 0;
 		taxDecrease = 0;
-		if ((totalReceiptsAmount/(double)income) < 0.2){
-			taxIncrease = Tax * 0.08;
+		if ( (totalReceiptsAmount/income) < 0.2) {
+			taxIncrease = tax * 0.08;
 		}
-		else if ((totalReceiptsAmount/(double)income) < 0.4){
-			taxIncrease = Tax * 0.04;
+		else if ( (totalReceiptsAmount/income) < 0.4) {
+			taxIncrease = tax * 0.04;
 		}
-		else if ((totalReceiptsAmount/(double)income) < 0.6){
-			taxDecrease = Tax * 0.15;
+		else if ( (totalReceiptsAmount/income) < 0.6) {
+			taxDecrease = tax * 0.15;
 		}
-		else{
-			taxDecrease = Tax * 0.30;
+		else {
+			taxDecrease = tax * 0.30;
 		}
-		
-		finalTax = Tax + taxIncrease - taxDecrease;
+
+		finalTax = tax + taxIncrease - taxDecrease;
 	}
 }
