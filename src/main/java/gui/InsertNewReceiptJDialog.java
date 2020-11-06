@@ -26,7 +26,7 @@ public class InsertNewReceiptJDialog extends JDialog {
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setType(Type.POPUP);
+		setType(Type.NORMAL);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Eisagwgh neas apodeixhs");
 		

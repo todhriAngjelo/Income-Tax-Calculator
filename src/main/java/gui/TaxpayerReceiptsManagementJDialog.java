@@ -34,7 +34,7 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 		setTitle(windowTitle);
 		setLocationRelativeTo(null);
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setType(Type.POPUP);
+		setType(Type.NORMAL);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 		taxpayerReceiptsJList = new JList();
