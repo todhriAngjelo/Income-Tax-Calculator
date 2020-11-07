@@ -2,11 +2,13 @@ import model.Database;
 import model.Receipt;
 import model.Taxpayer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import utils.ApplicationConstants;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -25,10 +27,21 @@ public class ApplicationTests {
     private final List<String> txtTestFilenameList = new ArrayList<>(Collections.singletonList("taxpayer_test_info.txt"));
     private final List<String> xmlTestFilenameList = new ArrayList<>(Collections.singletonList("taxpayer_test_info.xml"));
 
-    @Before
-    public void Setup() throws URISyntaxException {
+
+    /**
+     * Initialize the path to the taxpayer test files
+     **/
+    public ApplicationTests() throws URISyntaxException {
         URI uri = ClassLoader.getSystemResource(txtTestFilenameList.get(0)).toURI();
         Database.setTaxpayersInfoFilesPath(Paths.get(uri).getParent().toString());
+    }
+
+    /**
+     * This method runs after every test and clears the Database.
+     **/
+    @After
+    public void Setup() throws URISyntaxException {
+        Database.setTaxpayersArrayList(new ArrayList<Taxpayer>()); // clear the database for next tests
     }
 
     /**
@@ -42,7 +55,6 @@ public class ApplicationTests {
 
         // Get the taxpayer from the Database
         Taxpayer actualTaxpayerInfoTxt = Database.getTaxpayerFromArrayList(0);
-        Database.setTaxpayersArrayList(new ArrayList<Taxpayer>()); // clear the database for next tests
 
         // Test user info from txt file
         Taxpayer expectedTaxpayerInfoTxt = new Taxpayer("Apostolos Zarras", "130456093",
@@ -70,7 +82,6 @@ public class ApplicationTests {
 
         // Get the taxpayer from the Database
         Taxpayer actualTaxpayerInfoXml = Database.getTaxpayerFromArrayList(0);
-        Database.setTaxpayersArrayList(new ArrayList<Taxpayer>()); // clear the database for next tests
 
         // Test user info from xml file
         Taxpayer expectedTaxpayerInfoFromXml = new Taxpayer("Nikos Zisis", "130456094",
@@ -86,5 +97,24 @@ public class ApplicationTests {
         assertEquals(expectedTaxpayerReceiptFromXml.toString(), actualTaxpayerInfoXml.getReceipts().get(0).toString());
         assertEquals(expectedTaxpayerInfoFromXml.toString(), actualTaxpayerInfoXml.toString());
 
+    }
+
+    /**
+     * To test the taxpayer tax and final tax after decrease or increase we can calculate the actual
+     * amounts and compare them with the expected ones.
+     **/
+    @Test
+    public void testTaxCalculationResult() {
+        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+
+        double actualTax = Database.getTaxpayersArrayList().get(0).getTax();
+        double actualFinalTax = Database.getTaxpayersArrayList().get(0).getFinalTax();
+
+        double expectedTax = new BigDecimal(( 5.35 / 100 ) * 22570)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double expectedFinalTax = new BigDecimal(expectedTax + 0.08 * expectedTax)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+        assert  expectedTax == actualTax && expectedFinalTax == actualFinalTax;
     }
 }

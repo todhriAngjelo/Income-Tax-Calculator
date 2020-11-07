@@ -139,18 +139,6 @@ public class Taxpayer {
 	public double getFinalTax() {
 		return (new BigDecimal(finalTax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
-	
-	public void addReceiptToList(Receipt receipt) {
-		receipts.add(receipt);
-		
-		calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
-	}
-	
-	public void removeReceiptFromList(int index) {
-		receipts.remove(index);
-		
-		calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
-	}
 
 	public void setReceipts(ArrayList<Receipt> receipts)  {
 		this.receipts = receipts;
@@ -160,27 +148,39 @@ public class Taxpayer {
 		this.taxIncrease = taxIncrease;
 	}
 
+	public void addReceiptToList(Receipt receipt) {
+		receipts.add(receipt);
+
+		calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
+	}
+
+	public void removeReceiptFromList(int index) {
+		receipts.remove(index);
+
+		calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
+	}
+
 	public void calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts() {
 		double totalReceiptsAmount = 0;
 		for (Receipt receipt : receipts){
 			totalReceiptsAmount += receipt.getAmount();
 		}
-		
-		taxIncrease = 0;
-		taxDecrease = 0;
-		if ( (totalReceiptsAmount/income) < 0.2) {
+
+		if (  totalReceiptsAmount  < 0.2 * income ) {
 			taxIncrease = tax * 0.08;
+			finalTax = tax + taxIncrease;
 		}
-		else if ( (totalReceiptsAmount/income) < 0.4) {
+		else if ( totalReceiptsAmount < 0.4 * income ) {
 			taxIncrease = tax * 0.04;
+			finalTax = tax + taxIncrease;
 		}
-		else if ( (totalReceiptsAmount/income) < 0.6) {
+		else if ( totalReceiptsAmount < 0.6 * income ) {
 			taxDecrease = tax * 0.15;
+			finalTax = tax - taxDecrease;
 		}
 		else {
 			taxDecrease = tax * 0.30;
+			finalTax = tax - taxDecrease;
 		}
-
-		finalTax = tax + taxIncrease - taxDecrease;
 	}
 }
