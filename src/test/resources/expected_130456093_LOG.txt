@@ -1,0 +1,12 @@
+Name: Apostolos Zarras
+AFM: 130456093
+Income: 22570.0
+Basic Tax: 1207.49
+Tax Increase: 96.6
+Total Tax: 1304.09
+Total Receipts Amount: 2000.0
+Entertainment: 0.0
+Basic: 2000.0
+Travel: 0.0
+Health: 0.0
+Other: 0.0

@@ -2,15 +2,22 @@ import model.Database;
 import model.Receipt;
 import model.Taxpayer;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import utils.ApplicationConstants;
+import static org.junit.Assert.assertTrue;
 
+import outputManagePackage.OutputSystem;
+import utils.ApplicationConstants;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -116,5 +123,38 @@ public class ApplicationTests {
                 .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
         assert  expectedTax == actualTax && expectedFinalTax == actualFinalTax;
+    }
+    /**
+     * To test if the .txt info files are written correctly
+     * we create a .txt info file and compare it to the expected one.
+     */
+    @Test
+    public void testTxtLogFile() throws URISyntaxException, IOException {
+
+        Path expectedLogFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_130456093_LOG.txt");
+        Path actualLogFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"130456093_LOG.txt");
+        File expected = new File(expectedLogFilePath.toString());
+        File actual = new File(actualLogFilePath.toString());
+        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        OutputSystem.saveTaxpayerInfoToTxtLogFile(Database.getTaxpayersInfoFilesPath(), 0);
+
+        Assert.assertEquals(FileUtils.readLines(expected), FileUtils.readLines(actual));
+        actual.delete();
+    }
+    /**
+     * To test if the .xml info files are written correctly
+     * we create a .xml info file and compare it to the expected one.
+     */
+    @Test
+    public void testXmlLogFile() throws URISyntaxException, IOException {
+        Path expectedLogFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_130456093_LOG.xml");
+        Path actualLogFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"130456093_LOG.xml");
+        File expected = new File(expectedLogFilePath.toString());
+        File actual = new File (actualLogFilePath.toString());
+        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        OutputSystem.saveTaxpayerInfoToXmlLogFile(Database.getTaxpayersInfoFilesPath(),0);
+
+        Assert.assertEquals(FileUtils.readLines(expected),FileUtils.readLines(actual));
+        actual.delete();
     }
 }
