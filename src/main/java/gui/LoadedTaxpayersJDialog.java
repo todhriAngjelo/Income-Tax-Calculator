@@ -188,7 +188,6 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
-					    
 					    OutputSystem.saveTaxpayerInfoToTxtLogFile(savePath, taxpayerIndex);
 						JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
 					}
@@ -210,8 +209,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
-
-						OutputSystem.saveTaxpayerInfoToXmlLogFile(savePath, taxpayerIndex);
+					    OutputSystem.saveTaxpayerInfoToXmlLogFile(savePath, taxpayerIndex);
 						JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
