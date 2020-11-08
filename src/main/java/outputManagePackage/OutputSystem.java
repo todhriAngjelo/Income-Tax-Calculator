@@ -1,13 +1,14 @@
 package outputManagePackage;
-import model.*;
+
 import model.Receipt;
+import model.Taxpayer;
+import model.Database;
 
 import java.awt.Dialog.ModalExclusionType;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
-import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
