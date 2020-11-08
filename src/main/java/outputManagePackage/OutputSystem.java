@@ -130,7 +130,7 @@ public class OutputSystem {
 		try
 		{
 			if( !System.getProperty("os.name").contains("Windows") ) {
-				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "\" + taxpayer.getAFM() + \"_LOG.txt"));
+				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "/" + taxpayer.getAfm() + "_LOG.txt"));
 			}
 			else{
 				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "//" + taxpayer.getAfm() + "_LOG.txt"));
@@ -159,8 +159,6 @@ public class OutputSystem {
 		outputStream.println("Other: " + taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.OTHER_RECEIPT));
 		
 		outputStream.close();
-		
-		JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public static void saveTaxpayerInfoToXmlLogFile(String folderSavePath, int taxpayerIndex){
@@ -170,7 +168,7 @@ public class OutputSystem {
 		try
 		{
 			if( !System.getProperty("os.name").contains("Windows") ) {
-				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "\" + taxpayer.getAFM() + \"_LOG.xml"));
+				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "/" + taxpayer.getAfm() + "_LOG.xml"));
 			}
 			else{
 				outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "//" + taxpayer.getAfm() + "_LOG.xml"));
@@ -199,8 +197,6 @@ public class OutputSystem {
 		outputStream.println("<Other> "+taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.OTHER_RECEIPT)+" </Other>");
 		
 		outputStream.close();
-		
-		JOptionPane.showMessageDialog(null, "H apothikeysh oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public static void createTaxpayerReceiptsPieJFreeChart(int taxpayerIndex){
