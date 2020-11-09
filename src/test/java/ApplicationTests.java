@@ -1,13 +1,14 @@
 import model.Database;
 import model.Receipt;
 import model.Taxpayer;
+import outputManagePackage.OutputSystem;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-import outputManagePackage.OutputSystem;
+
 import utils.ApplicationConstants;
 import java.io.File;
 import java.io.IOException;
@@ -158,4 +159,44 @@ public class ApplicationTests {
                 FileUtils.readLines(actual, StandardCharsets.UTF_8));
         actual.delete();
     }
+
+    /**
+     * To test methods that create charts
+     * we will match the contents of the charts
+     * to the objects on memory.
+     */
+    @Test
+    public void testReceiptPieChart(){
+        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        double actualBasicSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.BASIC_RECEIPT);
+        double actualEntertainmentSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.ENTERTAINMENT_RECEIPT);
+        double actualHealthSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.HEALTH_RECEIPT);
+        double actualTravelSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.TRAVEL_RECEIPT);
+        double actualOtherSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.OTHER_RECEIPT);
+        assertEquals(2000,actualBasicSum,0.00);
+        assertEquals(0,actualEntertainmentSum,0.00);
+        assertEquals(0,actualHealthSum,0.00);
+        assertEquals(0,actualTravelSum,0.00);
+        assertEquals(0,actualOtherSum,0.00);
+    }
+
+    /**
+     * To test methods that create charts
+     * we will match the contents of the charts
+     * to the objects on memory.
+     */
+    @Test
+    public void testTaxAnalysisBarChart(){
+        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        double actualTax= taxpayer.getTax();
+        double actualFinalTax = taxpayer.getFinalTax();
+        double actualTaxVariationAmount = taxpayer.getTaxIncrease()!=0? taxpayer.getTaxIncrease() : taxpayer.getTaxDecrease()*(-1);
+        assertEquals(1207.49,actualTax,0);
+        assertEquals(1304.09,actualFinalTax,0);
+        assertEquals(96.6,actualTaxVariationAmount,0);
+    }
+
+    
 }
