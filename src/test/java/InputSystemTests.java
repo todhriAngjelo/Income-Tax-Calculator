@@ -1,18 +1,16 @@
 import model.Database;
 import model.Receipt;
 import model.Taxpayer;
-import outputManagePackage.OutputSystem;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-
+import outputManagePackage.OutputSystem;
 import utils.ApplicationConstants;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -23,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class ApplicationTests {
+public class InputSystemTests {
 
     /**
      * The Database class method needs 2 params,
@@ -37,17 +35,17 @@ public class ApplicationTests {
     /**
      * Initialize the path to the taxpayer test files
      **/
-    public ApplicationTests() throws URISyntaxException {
+    public InputSystemTests() throws URISyntaxException {
         URI uri = ClassLoader.getSystemResource(txtTestFilenameList.get(0)).toURI();
         Database.setTaxpayersInfoFilesPath(Paths.get(uri).getParent().toString());
     }
 
     /**
-     * This method runs after every test and clears the Database.
+     * This method runs after every test and cleans the Database.
      **/
     @After
-    public void Setup() throws URISyntaxException {
-        Database.setTaxpayersArrayList(new ArrayList<Taxpayer>()); // clear the database for next tests
+    public void cleanDatabase() {
+        Database.setTaxpayersArrayList(new ArrayList<Taxpayer>());
     }
 
     /**
@@ -106,25 +104,6 @@ public class ApplicationTests {
     }
 
     /**
-     * To test the taxpayer tax and final tax after decrease or increase we can calculate the actual
-     * amounts and compare them with the expected ones.
-     **/
-    @Test
-    public void testTaxCalculationResult() {
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-
-        double actualTax = Database.getTaxpayersArrayList().get(0).getTax();
-        double actualFinalTax = Database.getTaxpayersArrayList().get(0).getFinalTax();
-
-        double expectedTax = new BigDecimal(( 5.35 / 100 ) * 22570)
-                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        double expectedFinalTax = new BigDecimal(expectedTax + 0.08 * expectedTax)
-                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-
-        assert  expectedTax == actualTax && expectedFinalTax == actualFinalTax;
-    }
-
-    /**
      * To test if the .txt info files are written correctly
      * we create a .txt info file and compare it to the expected one.
      */
@@ -155,91 +134,6 @@ public class ApplicationTests {
         OutputSystem.saveTaxpayerInfoToXmlLogFile(Database.getTaxpayersInfoFilesPath(),0);
         Path actualLogFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"130456093_LOG.xml");
         File actual = new File (actualLogFilePath.toString());
-        assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
-                FileUtils.readLines(actual, StandardCharsets.UTF_8));
-        actual.delete();
-    }
-
-    /**
-     * To test methods that create charts
-     * we will match the contents of the charts
-     * to the objects on memory.
-     */
-    @Test
-    public void testReceiptPieChart(){
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
-        double actualBasicSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.BASIC_RECEIPT);
-        double actualEntertainmentSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.ENTERTAINMENT_RECEIPT);
-        double actualHealthSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.HEALTH_RECEIPT);
-        double actualTravelSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.TRAVEL_RECEIPT);
-        double actualOtherSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.OTHER_RECEIPT);
-        assertEquals(2000,actualBasicSum,0.00);
-        assertEquals(0,actualEntertainmentSum,0.00);
-        assertEquals(0,actualHealthSum,0.00);
-        assertEquals(0,actualTravelSum,0.00);
-        assertEquals(0,actualOtherSum,0.00);
-    }
-
-    /**
-     * To test methods that create charts
-     * we will match the contents of the charts
-     * to the objects on memory.
-     */
-    @Test
-    public void testTaxAnalysisBarChart(){
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
-        double actualTax= taxpayer.getTax();
-        double actualFinalTax = taxpayer.getFinalTax();
-        double actualTaxVariationAmount = taxpayer.getTaxIncrease()!=0? taxpayer.getTaxIncrease() : taxpayer.getTaxDecrease()*(-1);
-        assertEquals(1207.49,actualTax,0);
-        assertEquals(1304.09,actualFinalTax,0);
-        assertEquals(96.6,actualTaxVariationAmount,0);
-    }
-    /**
-     * Testing saveUpdatedTaxpayerTxtFile on deleting a receipt
-     * We create an updated Taxpayer .txt file and compare it to the actual one.
-     */
-    @Test
-    public void testSaveUpdatedTaxpayerTxtFileOndDelete() throws IOException {
-        Path expectedUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_deleteReceipt.txt");
-        File expected = new File(expectedUpdatedFilePath.toString());
-
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
-        taxpayer.removeReceiptFromList(0);
-
-        Path actualUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"testFile");
-        File actual = new File (actualUpdatedFilePath.toString());
-        OutputSystem.saveUpdatedTaxpayerTxtInputFile(actualUpdatedFilePath.toString(),0);
-
-        assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
-                FileUtils.readLines(actual, StandardCharsets.UTF_8));
-        actual.delete();
-    }
-
-    /**
-     * Testing saveUpdatedTaxpayerTxtFile on adding a receipt
-     * We create an updated Taxpayer .txt file and compare it to the actual one.
-     */
-    @Test
-    public void testSaveUpdatedTaxpayerTxtFileOnAdd() throws IOException {
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
-        Receipt testReceipt =
-                new Receipt(ApplicationConstants.BASIC_RECEIPT, "2", "25/2/2014", "2000.0",
-                        "Hand Made Clothes", "Greece", "Chalkida", "Avanton", "10");
-
-        taxpayer.addReceiptToList(testReceipt);
-
-        Path expectedUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_addReceipt.txt");
-        File expected = new File(expectedUpdatedFilePath.toString());
-        Path actualUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"testFile.txt");
-        File actual = new File (actualUpdatedFilePath.toString());
-
-        OutputSystem.saveUpdatedTaxpayerTxtInputFile(actualUpdatedFilePath.toString(),0);
-
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
                 FileUtils.readLines(actual, StandardCharsets.UTF_8));
         actual.delete();

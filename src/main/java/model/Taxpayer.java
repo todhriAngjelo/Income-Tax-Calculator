@@ -121,23 +121,23 @@ public class Taxpayer {
 	}
 	
 	public double getIncome() {
-		return (new BigDecimal(income).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+		return income;
 	}
 	
 	public double getTax() {
-		return (new BigDecimal(tax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+		return tax;
 	}
 	
 	public double getTaxIncrease() {
-		return (new BigDecimal(taxIncrease).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+		return taxIncrease;
 	}
 	
 	public double getTaxDecrease() {
-		return (new BigDecimal(taxDecrease).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+		return taxDecrease;
 	}
 	
 	public double getFinalTax() {
-		return (new BigDecimal(finalTax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+		return finalTax;
 	}
 
 	public void setReceipts(ArrayList<Receipt> receipts)  {
