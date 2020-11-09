@@ -197,6 +197,51 @@ public class ApplicationTests {
         assertEquals(1304.09,actualFinalTax,0);
         assertEquals(96.6,actualTaxVariationAmount,0);
     }
+    /**
+     * Testing saveUpdatedTaxpayerTxtFile on deleting a receipt
+     * We create an updated Taxpayer .txt file and compare it to the actual one.
+     */
+    @Test
+    public void testSaveUpdatedTaxpayerTxtFileOndDelete() throws IOException {
+        Path expectedUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_deleteReceipt.txt");
+        File expected = new File(expectedUpdatedFilePath.toString());
 
-    
+        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        taxpayer.removeReceiptFromList(0);
+
+        Path actualUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"testFile");
+        File actual = new File (actualUpdatedFilePath.toString());
+        OutputSystem.saveUpdatedTaxpayerTxtInputFile(actualUpdatedFilePath.toString(),0);
+
+        assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
+                FileUtils.readLines(actual, StandardCharsets.UTF_8));
+        actual.delete();
+    }
+
+    /**
+     * Testing saveUpdatedTaxpayerTxtFile on adding a receipt
+     * We create an updated Taxpayer .txt file and compare it to the actual one.
+     */
+    @Test
+    public void testSaveUpdatedTaxpayerTxtFileOnAdd() throws IOException {
+        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        Receipt testReceipt =
+                new Receipt(ApplicationConstants.BASIC_RECEIPT, "2", "25/2/2014", "2000.0",
+                        "Hand Made Clothes", "Greece", "Chalkida", "Avanton", "10");
+
+        taxpayer.addReceiptToList(testReceipt);
+
+        Path expectedUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_addReceipt.txt");
+        File expected = new File(expectedUpdatedFilePath.toString());
+        Path actualUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"testFile.txt");
+        File actual = new File (actualUpdatedFilePath.toString());
+
+        OutputSystem.saveUpdatedTaxpayerTxtInputFile(actualUpdatedFilePath.toString(),0);
+
+        assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
+                FileUtils.readLines(actual, StandardCharsets.UTF_8));
+        actual.delete();
+    }
 }
