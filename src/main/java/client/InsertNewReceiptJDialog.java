@@ -1,4 +1,4 @@
-package gui;
+package client;
 import model.*;
 
 import javax.swing.JButton;

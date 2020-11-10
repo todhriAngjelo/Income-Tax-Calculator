@@ -1,6 +1,6 @@
 package model;
-import inputManagePackage.*;
-import outputManagePackage.*;
+import dataload.*;
+import exporters.*;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -70,7 +70,7 @@ public class Database {
                return (name.toLowerCase().endsWith("_info.txt") || name.toLowerCase().endsWith("_info.xml"));
             }
          };
-		
+
 		for (File file : taxpayersInfoFilesPathFileObject.listFiles(fileNameFilter)){
 			if (!file.getName().contains(taxpayersArrayList.get(index).getAfm())) continue;
 			

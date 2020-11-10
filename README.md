@@ -26,7 +26,7 @@ If you need more information please take a look [here](https://maven.apache.org/
 # Run Application
 
 You can run the compiled and packaged JAR with the following command:
-- `java -cp target/Minnesota-Income-Tax-Calculation-1.0-SNAPSHOT.jar gui.MainJFrameWindow`
+- `java -cp target/Minnesota-Income-Tax-Calculation-1.0-SNAPSHOT.jar client.MainJFrameWindow`
 
 or if you have specified the mainClass attribute in the Manifest:
 - `java -jar target/Minnesota-Income-Tax-Calculation-1.0-SNAPSHOT.jar`

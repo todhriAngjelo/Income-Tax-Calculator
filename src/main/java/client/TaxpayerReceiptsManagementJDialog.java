@@ -1,4 +1,4 @@
-package gui;
+package client;
 
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;

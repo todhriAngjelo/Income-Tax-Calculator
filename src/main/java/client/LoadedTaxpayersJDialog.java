@@ -1,6 +1,6 @@
-package gui;
+package client;
 import model.Database;
-import outputManagePackage.OutputSystem;
+import exporters.OutputSystem;
 
 import java.awt.Color;
 import java.awt.Font;

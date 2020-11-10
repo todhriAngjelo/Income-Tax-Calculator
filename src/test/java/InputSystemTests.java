@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-import outputManagePackage.OutputSystem;
+import exporters.OutputSystem;
 import utils.ApplicationConstants;
 import java.io.File;
 import java.io.IOException;

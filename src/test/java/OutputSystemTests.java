@@ -1,7 +1,7 @@
 import model.Database;
 import model.Receipt;
 import model.Taxpayer;
-import outputManagePackage.OutputSystem;
+import exporters.OutputSystem;
 
 import utils.ApplicationConstants;
 
@@ -126,6 +126,7 @@ public class OutputSystemTests {
                 FileUtils.readLines(actual, StandardCharsets.UTF_8));
         actual.delete();
     }
+
     /**
      * To test the saveUpdatedTaxpayerXmlFile when deleting a receipt
      * we create an updated Taxpayer .xml file and compare it to the actual one.
@@ -147,6 +148,7 @@ public class OutputSystemTests {
                 FileUtils.readLines(actual, StandardCharsets.UTF_8));
         actual.delete();
     }
+
     /**
      * To test the saveUpdatedTaxpayerXmlFile when adding a receipt
      * we create an updated Taxpayer .xml file and compare it to the actual one.

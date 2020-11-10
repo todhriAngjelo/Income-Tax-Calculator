@@ -1,4 +1,4 @@
-package gui;
+package client;
 import model.Database;
 
 import java.awt.EventQueue;
