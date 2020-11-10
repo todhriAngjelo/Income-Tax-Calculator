@@ -30,7 +30,7 @@ public class OutputSystemTests {
      * and the second one is a list of the files inside that folder
      **/
     private final List<String> txtTestFilenameList = new ArrayList<>(Collections.singletonList("taxpayer_test_info.txt"));
-
+    private final List<String> xmlTestFilenameList = new ArrayList<>(Collections.singletonList("taxpayer_test_info.xml"));
     /**
      * Initialize the path to the taxpayer test files
      **/
@@ -121,6 +121,52 @@ public class OutputSystemTests {
         File actual = new File (actualUpdatedFilePath.toString());
 
         OutputSystem.saveUpdatedTaxpayerTxtInputFile(actualUpdatedFilePath.toString(), 0);
+
+        assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
+                FileUtils.readLines(actual, StandardCharsets.UTF_8));
+        actual.delete();
+    }
+    /**
+     * To test the saveUpdatedTaxpayerXmlFile when deleting a receipt
+     * we create an updated Taxpayer .xml file and compare it to the actual one.
+     */
+    @Test
+    public  void testSaveUpdatedTaxpayerXmlFileOnDelete() throws IOException {
+        Path expectedUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_deleteReceipt.xml");
+        File expected = new File(expectedUpdatedFilePath.toString());
+
+        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), xmlTestFilenameList);
+        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        taxpayer.removeReceiptFromList(0);
+
+        Path actualUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"testFile.xml");
+        File actual = new File (actualUpdatedFilePath.toString());
+        OutputSystem.saveUpdatedTaxpayerXmlInputFile(actualUpdatedFilePath.toString(),0);
+
+        assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
+                FileUtils.readLines(actual, StandardCharsets.UTF_8));
+        actual.delete();
+    }
+    /**
+     * To test the saveUpdatedTaxpayerXmlFile when adding a receipt
+     * we create an updated Taxpayer .xml file and compare it to the actual one.
+     */
+    @Test
+    public void testSaveUpdatedTaxpayerXmlFileOnAdd() throws IOException {
+        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), xmlTestFilenameList);
+        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        Receipt testReceipt =
+                new Receipt(ApplicationConstants.BASIC_RECEIPT, "2", "25/2/2014", "2000.0",
+                        "Hand Made Clothes", "Greece", "Chalkida", "Avanton", "10");
+
+        taxpayer.addReceiptToList(testReceipt);
+
+        Path expectedUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(), "expected_addReceipt.xml");
+        File expected = new File(expectedUpdatedFilePath.toString());
+        Path actualUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(), "testFile.xml");
+        File actual = new File (actualUpdatedFilePath.toString());
+
+        OutputSystem.saveUpdatedTaxpayerXmlInputFile(actualUpdatedFilePath.toString(), 0);
 
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
                 FileUtils.readLines(actual, StandardCharsets.UTF_8));
