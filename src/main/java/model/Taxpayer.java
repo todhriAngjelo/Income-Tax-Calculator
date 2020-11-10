@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Taxpayer {
@@ -16,13 +15,11 @@ public class Taxpayer {
 
 
 	public Taxpayer(String name, String afm, String familyStatus, String income) {
-		this.name = name.trim().replace("\n", "");
-		this.afm = afm.trim().replace("\n", "");
-		this.familyStatus = FamilyStatus.getFamilyStatusInstance(familyStatus.trim().replace("\n", ""));
-		this.income = Double.parseDouble(income.trim().replace("\n", ""));
+		this.name = name.trim();
+		this.afm = afm.trim();
+		this.familyStatus = FamilyStatus.getFamilyStatusInstance( familyStatus.trim() );
+		this.income = Double.parseDouble( income.trim() );
 		this.tax = calculateTax();
-		taxIncrease = 0;
-		taxDecrease = 0;
 		receipts = new ArrayList<>();
 	}
 	
@@ -100,8 +97,7 @@ public class Taxpayer {
 		for (Receipt receipt : receipts){
 			totalReceiptsAmount += receipt.getAmount();
 		}
-		
-		return (new BigDecimal(totalReceiptsAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+		return totalReceiptsAmount ;
 	}
 	
 	public String getName() {
