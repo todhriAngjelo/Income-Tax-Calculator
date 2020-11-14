@@ -1,6 +1,7 @@
 package model;
 import dataload.*;
 import exporters.*;
+import utils.ApplicationErrors;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -23,8 +24,23 @@ public class Database {
 		return Database.taxpayersInfoFilesPath;
 	}
 	
-	public static void processTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles){
-		InputSystem.addTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, taxpayersAfmInfoFiles);
+	public static void processTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> inputFiles){
+
+		for (String inputFile : inputFiles)
+		{
+			if (inputFile.endsWith(".txt")){
+				TxtFileInput txtFileInputInput = new TxtFileInput();
+				txtFileInputInput.loadTaxpayerDataFromTxtFileIntoDatabase(afmInfoFilesFolderPath, inputFile);
+			}
+			else if (inputFile.endsWith(".xml")){
+				XmlFileInput xmlFileInputInput = new XmlFileInput();
+				xmlFileInputInput.loadTaxpayersDataFromXmlFileIntoDatabase(afmInfoFilesFolderPath, inputFile);
+			} else {
+				throw new IllegalArgumentException(
+						ApplicationErrors.INPUT_FILE_TYPE_ERROR
+				);
+			}
+		}
 	}
 
 	public static ArrayList<Taxpayer> getTaxpayersArrayList() {
