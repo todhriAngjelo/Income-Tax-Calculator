@@ -1,4 +1,4 @@
-import model.Database;
+import persistence.Database;
 import model.Receipt;
 import model.Taxpayer;
 

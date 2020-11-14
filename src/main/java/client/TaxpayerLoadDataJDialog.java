@@ -16,7 +16,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import java.awt.Color;
 
-import model.Database;
+import persistence.Database;
 
 
 public class TaxpayerLoadDataJDialog extends JDialog {
@@ -85,7 +85,6 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 						Database.processTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
 						JLabel totalLoadedTaxpayersJLabel = (JLabel)appMainWindow.getContentPane().getComponent(1);
 						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getTaxpayersArrayListSize()));
-						System.out.println(Database.getTaxpayersArrayListSize());
 						dispose();
 					}
 				}

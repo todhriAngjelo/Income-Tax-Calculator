@@ -2,7 +2,7 @@ package exporters;
 
 import model.Receipt;
 import model.Taxpayer;
-import model.Database;
+import persistence.Database;
 
 import java.awt.Dialog.ModalExclusionType;
 import java.io.FileNotFoundException;

@@ -1,5 +1,5 @@
 package client;
-import model.Database;
+import persistence.Database;
 import exporters.OutputSystem;
 
 import java.awt.Color;

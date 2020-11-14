@@ -1,6 +1,7 @@
-package model;
+package persistence;
 import dataload.*;
 import exporters.*;
+import model.Taxpayer;
 import utils.ApplicationErrors;
 
 import java.io.File;

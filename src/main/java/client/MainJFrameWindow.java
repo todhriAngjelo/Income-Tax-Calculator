@@ -1,5 +1,5 @@
 package client;
-import model.Database;
+import persistence.Database;
 
 import java.awt.EventQueue;
 import java.awt.Font;

@@ -1,4 +1,4 @@
-import model.Database;
+import persistence.Database;
 import model.Taxpayer;
 
 import org.junit.After;

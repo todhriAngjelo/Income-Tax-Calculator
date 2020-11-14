@@ -1,5 +1,6 @@
 package client;
 import model.*;
+import persistence.Database;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
