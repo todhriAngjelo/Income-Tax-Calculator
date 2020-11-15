@@ -111,7 +111,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 		showSelectedTaxpayerInfoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (loadedTaxpayersJList.getSelectedIndex()!=-1){
-					JOptionPane.showMessageDialog(null, Database.getTaxpayerFromArrayList(loadedTaxpayersJList.getSelectedIndex()).toString(),  loadedTaxpayersJList.getSelectedValue().toString(), JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, Database.getDatabaseInstance().getTaxpayerFromArrayList(loadedTaxpayersJList.getSelectedIndex()).toString(),  loadedTaxpayersJList.getSelectedValue().toString(), JOptionPane.PLAIN_MESSAGE);
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Den exeis epilexei forologoumeno apo th lista", "sfalma", JOptionPane.WARNING_MESSAGE);
@@ -122,16 +122,16 @@ public class LoadedTaxpayersJDialog extends JDialog {
 		deleteSelectedTaxpayerFromDatabaseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (loadedTaxpayersJList.getSelectedIndex()!=-1){
-					int dialogResult = JOptionPane.showConfirmDialog (null, "Diagrafh epilegmenou forologoumenou("+loadedTaxpayersJList.getSelectedValue().toString()+") ��� ��� ���� ���������?", "����������� ���������", JOptionPane.YES_NO_OPTION);
+					int dialogResult = JOptionPane.showConfirmDialog (null, "Diagrafh epilegmenou forologoumenou("+loadedTaxpayersJList.getSelectedValue().toString()+") apo th vash dedomenwn?", "Epivevaiwsh diagrafhs", JOptionPane.YES_NO_OPTION);
 					if(dialogResult == JOptionPane.YES_OPTION){
-						Database.removeTaxpayerFromArrayList(loadedTaxpayersJList.getSelectedIndex());
+						Database.getDatabaseInstance().removeTaxpayerFromArrayList(loadedTaxpayersJList.getSelectedIndex());
 						
 						fillLoadedTaxpayersJList();
 						
 						JLabel totalLoadedTaxpayersJLabel = (JLabel)appMainWindow.getContentPane().getComponent(1);
-						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getTaxpayersArrayListSize()));
+						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getDatabaseInstance().getTaxpayersArrayListSize()));
 						
-						if (Database.getTaxpayersArrayListSize()==0) dispose();
+						if (Database.getDatabaseInstance().getTaxpayersArrayListSize()==0) dispose();
 					}
 				}
 				else{
@@ -183,7 +183,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 				if (taxpayerIndex!=-1){
 					JFileChooser saveFileFolderChooser = new JFileChooser();
 					saveFileFolderChooser.setCurrentDirectory(new java.io.File("."));
-					saveFileFolderChooser.setDialogTitle("Epilexte fakelo apothikeushs "+Database.getTaxpayerFromArrayList(taxpayerIndex).getAfm()+"_LOG.txt");
+					saveFileFolderChooser.setDialogTitle("Epilexte fakelo apothikeushs "+Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex).getAfm()+"_LOG.txt");
 					saveFileFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -204,7 +204,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 				if (taxpayerIndex!=-1){
 					JFileChooser saveFileFolderChooser = new JFileChooser();
 					saveFileFolderChooser.setCurrentDirectory(new java.io.File("."));
-					saveFileFolderChooser.setDialogTitle("Epilexte fakelo apothikeushs "+Database.getTaxpayerFromArrayList(taxpayerIndex).getAfm()+"_LOG.xml");
+					saveFileFolderChooser.setDialogTitle("Epilexte fakelo apothikeushs "+Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex).getAfm()+"_LOG.xml");
 					saveFileFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -221,7 +221,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 	}
 	
 	public void fillLoadedTaxpayersJList(){
-		final String[] jlistValues = Database.getTaxpayersNameAfmValuesPairList();
+		final String[] jlistValues = Database.getDatabaseInstance().getTaxpayersNameAfmValuesPairList();
 		
 		loadedTaxpayersJList.setModel(new AbstractListModel() {
 			String[] values = jlistValues;

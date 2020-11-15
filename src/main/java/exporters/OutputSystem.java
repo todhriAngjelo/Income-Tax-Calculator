@@ -55,7 +55,7 @@ public class OutputSystem {
 			System.out.println("Problem opening: "+filePath);
 		}
 		
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 		outputStream.println("Name: "+taxpayer.getName());
 		outputStream.println("AFM: "+taxpayer.getAfm());
 		outputStream.println("Status: "+taxpayer.getFamilyStatus());
@@ -94,7 +94,7 @@ public class OutputSystem {
 			System.out.println("Problem opening: "+filePath);
 		}
 		
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 		outputStream.println("<Name> "+taxpayer.getName()+" </Name>");
 		outputStream.println("<AFM> "+taxpayer.getAfm()+" </AFM>");
 		outputStream.println("<Status> "+taxpayer.getFamilyStatus()+" </Status>");
@@ -125,7 +125,7 @@ public class OutputSystem {
 	}
 
 	public static void saveTaxpayerInfoToTxtLogFile(String folderSavePath, int taxpayerIndex){
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 		
 		PrintWriter outputStream = null;
 		try
@@ -163,7 +163,7 @@ public class OutputSystem {
 	}
 	
 	public static void saveTaxpayerInfoToXmlLogFile(String folderSavePath, int taxpayerIndex){
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 		
 		PrintWriter outputStream = null;
 		try
@@ -202,7 +202,7 @@ public class OutputSystem {
 	
 	public static void createTaxpayerReceiptsPieJFreeChart(int taxpayerIndex){
 		receiptPieChartDataset = new DefaultPieDataset();
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 		
 		receiptPieChartDataset.setValue("Basic", taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.BASIC_RECEIPT));
 		receiptPieChartDataset.setValue("Entertainment", taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.ENTERTAINMENT_RECEIPT));
@@ -215,7 +215,7 @@ public class OutputSystem {
 		PieSectionLabelGenerator generator = new StandardPieSectionLabelGenerator("{0}: {1}$ ({2})", new DecimalFormat("0.00"), new DecimalFormat("0.00%"));
 		piePlot.setLabelGenerator(generator); 
 
-		receiptPieChartFrame = new ChartFrame(Database.getTaxpayerNameAfmValuesPairList(taxpayerIndex), receiptPieJFreeChart);
+		receiptPieChartFrame = new ChartFrame(Database.getDatabaseInstance().getTaxpayerNameAfmValuesPairList(taxpayerIndex), receiptPieJFreeChart);
 		receiptPieChartFrame.pack();
 		receiptPieChartFrame.setResizable(false);
 		receiptPieChartFrame.setLocationRelativeTo(null);
@@ -225,7 +225,7 @@ public class OutputSystem {
 	
 	public static void createTaxpayerTaxAnalysisBarJFreeChart(int taxpayerIndex){
 		DefaultCategoryDataset taxAnalysisBarChartDataset = new DefaultCategoryDataset();
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 		
 		String taxVariationType = taxpayer.getTaxIncrease()!=0? "Tax Increase" : "Tax Decrease";
 		double taxVariationAmount = taxpayer.getTaxIncrease()!=0? taxpayer.getTaxIncrease() : taxpayer.getTaxDecrease()*(-1);
@@ -236,7 +236,7 @@ public class OutputSystem {
 
 		JFreeChart taxAnalysisJFreeChart = ChartFactory.createBarChart("Tax Analysis Bar Chart", "",  "Tax Analysis in $", taxAnalysisBarChartDataset, PlotOrientation.VERTICAL, true, true, false);
 
-		ChartFrame receiptPieChartFrame = new ChartFrame(Database.getTaxpayerNameAfmValuesPairList(taxpayerIndex), taxAnalysisJFreeChart);
+		ChartFrame receiptPieChartFrame = new ChartFrame(Database.getDatabaseInstance().getTaxpayerNameAfmValuesPairList(taxpayerIndex), taxAnalysisJFreeChart);
 		receiptPieChartFrame.pack();
 		receiptPieChartFrame.setResizable(false);
 		receiptPieChartFrame.setLocationRelativeTo(null);

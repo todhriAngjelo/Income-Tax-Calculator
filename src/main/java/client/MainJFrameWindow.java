@@ -96,7 +96,7 @@ public class MainJFrameWindow {
 				    String afmInfoFilesFolderPath = afmInfoFilesFolderChooser.getSelectedFile().toString();
 				    JOptionPane.showMessageDialog(null, afmInfoFilesFolderPath, "diadromh fakelou arxeiwn eisodou", JOptionPane.INFORMATION_MESSAGE);
 				    
-				    Database.setTaxpayersInfoFilesPath(afmInfoFilesFolderPath);
+				    Database.getDatabaseInstance().setTaxpayersInfoFilesPath(afmInfoFilesFolderPath);
 				    
 				    TaxpayerLoadDataJDialog taxpayerLoadDataJDialog = new TaxpayerLoadDataJDialog(taxationMainWindowJFrame);
 				    taxpayerLoadDataJDialog.fillTaxpayersAfmInfoFilesJList(afmInfoFilesFolderPath);

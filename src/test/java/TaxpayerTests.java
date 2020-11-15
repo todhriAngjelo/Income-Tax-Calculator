@@ -14,6 +14,8 @@ import java.util.List;
 
 public class TaxpayerTests {
 
+    Database databaseInstance = Database.getDatabaseInstance();
+
     private final List<String> TestFilenameList = new ArrayList<>(
             Collections.singletonList("married_filing_jointly_taxpayer_test_info.txt")
     );
@@ -23,7 +25,7 @@ public class TaxpayerTests {
      **/
     public TaxpayerTests() throws URISyntaxException {
         URI uri = ClassLoader.getSystemResource(TestFilenameList.get(0)).toURI();
-        Database.setTaxpayersInfoFilesPath(Paths.get(uri).getParent().toString());
+        databaseInstance.setTaxpayersInfoFilesPath(Paths.get(uri).getParent().toString());
     }
 
     /**
@@ -31,7 +33,7 @@ public class TaxpayerTests {
      **/
     @After
     public void cleanDatabase() {
-        Database.setTaxpayersArrayList(new ArrayList<Taxpayer>());
+        Database.getDatabaseInstance().setTaxpayersArrayList(new ArrayList<Taxpayer>());
     }
 
     /**
@@ -40,10 +42,10 @@ public class TaxpayerTests {
      **/
     @Test
     public void testTaxCalculationResult() {
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), TestFilenameList);
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), TestFilenameList);
 
-        double actualTax = Database.getTaxpayersArrayList().get(0).getTax();
-        double actualFinalTax = Database.getTaxpayersArrayList().get(0).getFinalTax();
+        double actualTax = databaseInstance.getTaxpayersArrayList().get(0).getTax();
+        double actualFinalTax = databaseInstance.getTaxpayersArrayList().get(0).getFinalTax();
 
         double expectedTax = BigDecimal.valueOf( (5.35 / 100) * 22570 ).doubleValue();
         double expectedFinalTax = BigDecimal.valueOf( expectedTax + 0.08 * expectedTax ).doubleValue();

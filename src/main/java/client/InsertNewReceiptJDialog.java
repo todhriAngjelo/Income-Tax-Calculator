@@ -185,9 +185,9 @@ public class InsertNewReceiptJDialog extends JDialog {
 					Receipt newReceipt = new Receipt( kindComboBox.getSelectedItem().toString(), receiptIdTextField.getText(),
 							dateTextField.getText(), amountTextField.getText(), companyTextField.getText(),
 							countryTextField.getText(), cityTextField.getText(), streetTextField.getText(), numberTextField.getText());
-					Database.getTaxpayerFromArrayList(taxpayerID).addReceiptToList(newReceipt);
+					Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerID).addReceiptToList(newReceipt);
 					
-					Database.updateTaxpayerInputFile(taxpayerID);
+					Database.getDatabaseInstance().updateTaxpayerInputFile(taxpayerID);
 					
 					dispose();
 				}else{

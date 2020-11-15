@@ -81,7 +81,7 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 		showSelectedReceiptDetailsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (taxpayerReceiptsJList.getSelectedIndex()!=-1){
-					JOptionPane.showMessageDialog(null, Database.getTaxpayerFromArrayList(taxpayerID).getReceipt(taxpayerReceiptsJList.getSelectedIndex()).toString(), taxpayerReceiptsJList.getSelectedValue().toString(), JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerID).getReceipt(taxpayerReceiptsJList.getSelectedIndex()).toString(), taxpayerReceiptsJList.getSelectedValue().toString(), JOptionPane.PLAIN_MESSAGE);
 				}else{
 					JOptionPane.showMessageDialog(null, "Den exeis epilexei kapoia apodeixh apo th lista", "Sfalma", JOptionPane.WARNING_MESSAGE);
 				}
@@ -102,9 +102,9 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 				if (taxpayerReceiptsJList.getSelectedIndex()!=-1){
 					int dialogResult = JOptionPane.showConfirmDialog (null, "Diagrafh epilegmenhs apodeixhs("+taxpayerReceiptsJList.getSelectedValue().toString()+") ?", "����������� ���������", JOptionPane.YES_NO_OPTION);
 					if(dialogResult == JOptionPane.YES_OPTION){
-						Database.getTaxpayerFromArrayList(taxpayerID).removeReceiptFromList(taxpayerReceiptsJList.getSelectedIndex());
+						Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerID).removeReceiptFromList(taxpayerReceiptsJList.getSelectedIndex());
 						
-						Database.updateTaxpayerInputFile(taxpayerID);
+						Database.getDatabaseInstance().updateTaxpayerInputFile(taxpayerID);
 						
 						fillTaxpayerReceiptsJList();
 					}
@@ -116,7 +116,7 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 	}
 	
 	public void fillTaxpayerReceiptsJList(){
-		final String[] jlistValues = Database.getTaxpayerFromArrayList(taxpayerID).getReceiptsList();
+		final String[] jlistValues = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerID).getReceiptsList();
 		
 		taxpayerReceiptsJList.setModel(new AbstractListModel() {
 			String[] values = jlistValues;

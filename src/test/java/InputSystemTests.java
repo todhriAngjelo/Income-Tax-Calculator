@@ -1,3 +1,4 @@
+import org.junit.Before;
 import persistence.Database;
 import model.Receipt;
 import model.Taxpayer;
@@ -30,14 +31,14 @@ public class InputSystemTests {
      **/
     private final List<String> txtTestFilenameList = new ArrayList<>(Collections.singletonList("taxpayer_test_info.txt"));
     private final List<String> xmlTestFilenameList = new ArrayList<>(Collections.singletonList("taxpayer_test_info.xml"));
-
+    Database databaseInstance = Database.getDatabaseInstance();
 
     /**
      * Initialize the path to the taxpayer test files
      **/
     public InputSystemTests() throws URISyntaxException {
         URI uri = ClassLoader.getSystemResource(txtTestFilenameList.get(0)).toURI();
-        Database.setTaxpayersInfoFilesPath(Paths.get(uri).getParent().toString());
+        databaseInstance.setTaxpayersInfoFilesPath(Paths.get(uri).getParent().toString());
     }
 
     /**
@@ -45,7 +46,8 @@ public class InputSystemTests {
      **/
     @After
     public void cleanDatabase() {
-        Database.setTaxpayersArrayList(new ArrayList<Taxpayer>());
+
+        databaseInstance.setTaxpayersArrayList(new ArrayList<Taxpayer>());
     }
 
     /**
@@ -55,10 +57,10 @@ public class InputSystemTests {
     @Test
     public void testTaxpayerInfoFromTxt() {
 
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
 
         // Get the taxpayer from the Database
-        Taxpayer actualTaxpayerInfoTxt = Database.getTaxpayerFromArrayList(0);
+        Taxpayer actualTaxpayerInfoTxt = databaseInstance.getTaxpayerFromArrayList(0);
 
         // Test user info from txt file
         Taxpayer expectedTaxpayerInfoTxt = new Taxpayer("Apostolos Zarras", "130456093",
@@ -82,10 +84,10 @@ public class InputSystemTests {
     @Test
     public void testTaxpayerInfoFromXml() {
 
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), xmlTestFilenameList);
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), xmlTestFilenameList);
 
         // Get the taxpayer from the Database
-        Taxpayer actualTaxpayerInfoXml = Database.getTaxpayerFromArrayList(0);
+        Taxpayer actualTaxpayerInfoXml = databaseInstance.getTaxpayerFromArrayList(0);
 
         // Test user info from xml file
         Taxpayer expectedTaxpayerInfoFromXml = new Taxpayer("Nikos Zisis", "130456094",
@@ -110,11 +112,11 @@ public class InputSystemTests {
     @Test
     public void testTxtLogFile() throws IOException {
 
-        Path expectedLogFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_130456093_LOG.txt");
+        Path expectedLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"expected_130456093_LOG.txt");
         File expected = new File(expectedLogFilePath.toString());
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        OutputSystem.saveTaxpayerInfoToTxtLogFile(Database.getTaxpayersInfoFilesPath(), 0);
-        Path actualLogFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"130456093_LOG.txt");
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        OutputSystem.saveTaxpayerInfoToTxtLogFile(databaseInstance.getTaxpayersInfoFilesPath(), 0);
+        Path actualLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"130456093_LOG.txt");
         File actual = new File(actualLogFilePath.toString());
 
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
@@ -128,11 +130,11 @@ public class InputSystemTests {
      */
     @Test
     public void testXmlLogFile() throws IOException {
-        Path expectedLogFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_130456093_LOG.xml");
+        Path expectedLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"expected_130456093_LOG.xml");
         File expected = new File(expectedLogFilePath.toString());
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        OutputSystem.saveTaxpayerInfoToXmlLogFile(Database.getTaxpayersInfoFilesPath(),0);
-        Path actualLogFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"130456093_LOG.xml");
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        OutputSystem.saveTaxpayerInfoToXmlLogFile(databaseInstance.getTaxpayersInfoFilesPath(),0);
+        Path actualLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"130456093_LOG.xml");
         File actual = new File (actualLogFilePath.toString());
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
                 FileUtils.readLines(actual, StandardCharsets.UTF_8));

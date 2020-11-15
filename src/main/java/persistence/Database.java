@@ -10,19 +10,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-	private static String taxpayersInfoFilesPath;
-	private static ArrayList<Taxpayer> taxpayersArrayList = new ArrayList<>();
+	private String taxpayersInfoFilesPath;
+	private ArrayList<Taxpayer> taxpayersArrayList = new ArrayList<>();
+	private static Database databaseInstance = new Database();
 
-	public static void setTaxpayersArrayList(ArrayList<Taxpayer> taxpayersArrayList) {
-		Database.taxpayersArrayList = taxpayersArrayList;
+	private Database(){
+
 	}
 
-	public static void setTaxpayersInfoFilesPath(String taxpayersInfoFilesPath){
-		Database.taxpayersInfoFilesPath = taxpayersInfoFilesPath;
+	public static Database getDatabaseInstance() {
+		return databaseInstance;
+	}
+
+	public void setTaxpayersArrayList(ArrayList<Taxpayer> taxpayersArrayList) {
+		this.taxpayersArrayList = taxpayersArrayList;
+	}
+
+	public void setTaxpayersInfoFilesPath(String taxpayersInfoFilesPath){
+		this.taxpayersInfoFilesPath = taxpayersInfoFilesPath;
 	}
 	
-	public static String getTaxpayersInfoFilesPath(){
-		return Database.taxpayersInfoFilesPath;
+	public String getTaxpayersInfoFilesPath(){
+		return this.taxpayersInfoFilesPath;
 	}
 	
 	public static void processTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> inputFiles){
@@ -44,44 +53,44 @@ public class Database {
 		}
 	}
 
-	public static ArrayList<Taxpayer> getTaxpayersArrayList() {
-		return taxpayersArrayList;
+	public ArrayList<Taxpayer> getTaxpayersArrayList() {
+		return this.taxpayersArrayList;
 	}
 
-	public static void addTaxpayerToList(Taxpayer taxpayer){
-		taxpayersArrayList.add(taxpayer);
+	public void addTaxpayerToList(Taxpayer taxpayer){
+		this.taxpayersArrayList.add(taxpayer);
 	}
 	
-	public static int getTaxpayersArrayListSize(){
-		return taxpayersArrayList.size();
+	public int getTaxpayersArrayListSize(){
+		return this.taxpayersArrayList.size();
 	}
 	
-	public static Taxpayer getTaxpayerFromArrayList(int index){
-		return taxpayersArrayList.get(index);
+	public Taxpayer getTaxpayerFromArrayList(int index){
+		return this.taxpayersArrayList.get(index);
 	}
 	
-	public static void removeTaxpayerFromArrayList(int index){
-		taxpayersArrayList.remove(index);
+	public void removeTaxpayerFromArrayList(int index){
+		this.taxpayersArrayList.remove(index);
 	}
 	
-	public static String getTaxpayerNameAfmValuesPairList(int index){
-		Taxpayer taxpayer = taxpayersArrayList.get(index);
+	public String getTaxpayerNameAfmValuesPairList(int index){
+		Taxpayer taxpayer = this.taxpayersArrayList.get(index);
 		return taxpayer.getName() + " | " + taxpayer.getAfm();
 	}
 	
-	public static String[] getTaxpayersNameAfmValuesPairList(){
-		String[] taxpayersNameAfmValuesPairList = new String[taxpayersArrayList.size()];
+	public String[] getTaxpayersNameAfmValuesPairList(){
+		String[] taxpayersNameAfmValuesPairList = new String[this.taxpayersArrayList.size()];
 		
 		int c = 0;
-		for (Taxpayer taxpayer : taxpayersArrayList){
+		for (Taxpayer taxpayer : this.taxpayersArrayList){
 			taxpayersNameAfmValuesPairList[c++] = taxpayer.getName() + " | " + taxpayer.getAfm();
 		}
 		
 		return taxpayersNameAfmValuesPairList;
 	}
 	
-	public static void updateTaxpayerInputFile(int index){
-		File taxpayersInfoFilesPathFileObject = new File(taxpayersInfoFilesPath);
+	public void updateTaxpayerInputFile(int index){
+		File taxpayersInfoFilesPathFileObject = new File(this.taxpayersInfoFilesPath);
 		FilenameFilter fileNameFilter = new FilenameFilter(){
             public boolean accept(File dir, String name) {
                return (name.toLowerCase().endsWith("_info.txt") || name.toLowerCase().endsWith("_info.xml"));
@@ -89,7 +98,7 @@ public class Database {
          };
 
 		for (File file : taxpayersInfoFilesPathFileObject.listFiles(fileNameFilter)){
-			if (!file.getName().contains(taxpayersArrayList.get(index).getAfm())) continue;
+			if (!file.getName().contains(this.taxpayersArrayList.get(index).getAfm())) continue;
 			
 			if (file.getName().toLowerCase().endsWith(".txt")){
 				OutputSystem.saveUpdatedTaxpayerTxtInputFile(file.getAbsolutePath(), index);

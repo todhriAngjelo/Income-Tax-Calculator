@@ -48,7 +48,7 @@ public class TxtFileInput extends InputSystem {
             newTaxpayer.addReceiptToList(newReceipt);
         }
 
-        Database.addTaxpayerToList(newTaxpayer);
+        Database.getDatabaseInstance().addTaxpayerToList(newTaxpayer);
     }
 
     private static String getParameterValueFromTxtFileLine(String fileLine, String parameterName){

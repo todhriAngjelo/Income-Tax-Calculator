@@ -31,12 +31,13 @@ public class OutputSystemTests {
      **/
     private final List<String> txtTestFilenameList = new ArrayList<>(Collections.singletonList("taxpayer_test_info.txt"));
     private final List<String> xmlTestFilenameList = new ArrayList<>(Collections.singletonList("taxpayer_test_info.xml"));
+    Database databaseInstance = Database.getDatabaseInstance();
     /**
      * Initialize the path to the taxpayer test files
      **/
     public OutputSystemTests() throws URISyntaxException {
         URI uri = ClassLoader.getSystemResource(txtTestFilenameList.get(0)).toURI();
-        Database.setTaxpayersInfoFilesPath(Paths.get(uri).getParent().toString());
+        Database.getDatabaseInstance().setTaxpayersInfoFilesPath(Paths.get(uri).getParent().toString());
     }
 
     /**
@@ -44,7 +45,7 @@ public class OutputSystemTests {
      **/
     @After
     public void cleanDatabase() {
-        Database.setTaxpayersArrayList(new ArrayList<Taxpayer>());
+        Database.getDatabaseInstance().setTaxpayersArrayList(new ArrayList<Taxpayer>());
     }
 
     /**
@@ -53,8 +54,8 @@ public class OutputSystemTests {
      */
     @Test
     public void testReceiptPieChart(){
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
         double actualBasicSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.BASIC_RECEIPT);
         double actualEntertainmentSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.ENTERTAINMENT_RECEIPT);
         double actualHealthSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.HEALTH_RECEIPT);
@@ -69,8 +70,8 @@ public class OutputSystemTests {
 
     @Test
     public void testTaxAnalysisBarChart(){
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
         double actualTax = taxpayer.getTax();
         double actualFinalTax = taxpayer.getFinalTax();
         double actualTaxVariationAmount = taxpayer.getTaxIncrease() != 0 ? taxpayer.getTaxIncrease() : taxpayer.getTaxDecrease()*(-1);
@@ -85,14 +86,14 @@ public class OutputSystemTests {
      */
     @Test
     public void testSaveUpdatedTaxpayerTxtFileOndDelete() throws IOException {
-        Path expectedUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_deleteReceipt.txt");
+        Path expectedUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"expected_deleteReceipt.txt");
         File expected = new File(expectedUpdatedFilePath.toString());
 
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
         taxpayer.removeReceiptFromList(0);
 
-        Path actualUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"testFile");
+        Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"testFile");
         File actual = new File (actualUpdatedFilePath.toString());
         OutputSystem.saveUpdatedTaxpayerTxtInputFile(actualUpdatedFilePath.toString(),0);
 
@@ -107,17 +108,17 @@ public class OutputSystemTests {
      */
     @Test
     public void testSaveUpdatedTaxpayerTxtFileOnAdd() throws IOException {
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
+        Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
         Receipt testReceipt =
                 new Receipt(ApplicationConstants.BASIC_RECEIPT, "2", "25/2/2014", "2000.0",
                         "Hand Made Clothes", "Greece", "Chalkida", "Avanton", "10");
 
         taxpayer.addReceiptToList(testReceipt);
 
-        Path expectedUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(), "expected_addReceipt.txt");
+        Path expectedUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(), "expected_addReceipt.txt");
         File expected = new File(expectedUpdatedFilePath.toString());
-        Path actualUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(), "testFile.txt");
+        Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(), "testFile.txt");
         File actual = new File (actualUpdatedFilePath.toString());
 
         OutputSystem.saveUpdatedTaxpayerTxtInputFile(actualUpdatedFilePath.toString(), 0);
@@ -133,14 +134,14 @@ public class OutputSystemTests {
      */
     @Test
     public  void testSaveUpdatedTaxpayerXmlFileOnDelete() throws IOException {
-        Path expectedUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"expected_deleteReceipt.xml");
+        Path expectedUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"expected_deleteReceipt.xml");
         File expected = new File(expectedUpdatedFilePath.toString());
 
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), xmlTestFilenameList);
-        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), xmlTestFilenameList);
+        Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
         taxpayer.removeReceiptFromList(0);
 
-        Path actualUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(),"testFile.xml");
+        Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"testFile.xml");
         File actual = new File (actualUpdatedFilePath.toString());
         OutputSystem.saveUpdatedTaxpayerXmlInputFile(actualUpdatedFilePath.toString(),0);
 
@@ -155,17 +156,17 @@ public class OutputSystemTests {
      */
     @Test
     public void testSaveUpdatedTaxpayerXmlFileOnAdd() throws IOException {
-        Database.processTaxpayersDataFromFilesIntoDatabase(Database.getTaxpayersInfoFilesPath(), xmlTestFilenameList);
-        Taxpayer taxpayer = Database.getTaxpayerFromArrayList(0);
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), xmlTestFilenameList);
+        Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
         Receipt testReceipt =
                 new Receipt(ApplicationConstants.BASIC_RECEIPT, "2", "25/2/2014", "2000.0",
                         "Hand Made Clothes", "Greece", "Chalkida", "Avanton", "10");
 
         taxpayer.addReceiptToList(testReceipt);
 
-        Path expectedUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(), "expected_addReceipt.xml");
+        Path expectedUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(), "expected_addReceipt.xml");
         File expected = new File(expectedUpdatedFilePath.toString());
-        Path actualUpdatedFilePath = Paths.get(Database.getTaxpayersInfoFilesPath(), "testFile.xml");
+        Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(), "testFile.xml");
         File actual = new File (actualUpdatedFilePath.toString());
 
         OutputSystem.saveUpdatedTaxpayerXmlInputFile(actualUpdatedFilePath.toString(), 0);

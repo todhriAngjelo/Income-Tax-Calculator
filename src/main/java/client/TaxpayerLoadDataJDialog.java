@@ -84,7 +84,7 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 					if(dialogResult == JOptionPane.YES_OPTION){
 						Database.processTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
 						JLabel totalLoadedTaxpayersJLabel = (JLabel)appMainWindow.getContentPane().getComponent(1);
-						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getTaxpayersArrayListSize()));
+						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getDatabaseInstance().getTaxpayersArrayListSize()));
 						dispose();
 					}
 				}
