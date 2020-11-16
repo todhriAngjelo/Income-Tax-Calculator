@@ -9,6 +9,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -82,10 +83,15 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 					
 					int dialogResult = JOptionPane.showConfirmDialog (null, confirmDialogText, "Epivevaiwsh", JOptionPane.YES_NO_OPTION);
 					if(dialogResult == JOptionPane.YES_OPTION){
-						Database.processTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
-						JLabel totalLoadedTaxpayersJLabel = (JLabel)appMainWindow.getContentPane().getComponent(1);
-						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getDatabaseInstance().getTaxpayersArrayListSize()));
-						dispose();
+						try {
+							Database.processTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
+							JLabel totalLoadedTaxpayersJLabel = (JLabel)appMainWindow.getContentPane().getComponent(1);
+							totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getDatabaseInstance().getTaxpayersArrayListSize()));
+							dispose();
+						} catch (FileNotFoundException exception) {
+							JOptionPane.showMessageDialog(null, "Error loading taxpayer files", "Error", JOptionPane.ERROR_MESSAGE);
+							exception.printStackTrace();
+						}
 					}
 				}
 				else{

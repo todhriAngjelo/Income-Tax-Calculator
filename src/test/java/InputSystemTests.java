@@ -1,3 +1,4 @@
+import org.apache.commons.io.FileExistsException;
 import org.junit.Before;
 import persistence.Database;
 import model.Receipt;
@@ -11,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import exporters.OutputSystem;
 import utils.ApplicationConstants;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -55,7 +57,7 @@ public class InputSystemTests {
      * a dummy receipt with the expected data and then compare them with the actual objects in memory
      **/
     @Test
-    public void testTaxpayerInfoFromTxt() {
+    public void testTaxpayerInfoFromTxt() throws FileNotFoundException {
 
         Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
 
@@ -82,7 +84,7 @@ public class InputSystemTests {
      * To test the taxpayer info from the xml file we follow the same approach
      **/
     @Test
-    public void testTaxpayerInfoFromXml() {
+    public void testTaxpayerInfoFromXml() throws FileNotFoundException {
 
         Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), xmlTestFilenameList);
 

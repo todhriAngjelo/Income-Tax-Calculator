@@ -10,16 +10,10 @@ import java.util.Scanner;
 public class TxtFileInput extends InputSystem {
 
 
-    public void loadTaxpayerDataFromTxtFileIntoDatabase(String afmInfoFileFolderPath, String afmInfoFile){
+    public void loadTaxpayerDataFromTxtFileIntoDatabase(
+            String afmInfoFileFolderPath, String afmInfoFile) throws FileNotFoundException {
 
-        Scanner inputStream;
-        try {
-             inputStream = super.createInputStream(afmInfoFileFolderPath, afmInfoFile);
-        } catch ( FileNotFoundException e) {
-            e.printStackTrace();
-            return; //TODO return an error code to handle the error from the client.
-        }
-
+        Scanner inputStream = super.createInputStream(afmInfoFileFolderPath, afmInfoFile);
 
         String taxpayerName = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Name: ");
         String taxpayerAFM = getParameterValueFromTxtFileLine(inputStream.nextLine(), "AFM: ");
@@ -52,6 +46,6 @@ public class TxtFileInput extends InputSystem {
     }
 
     private static String getParameterValueFromTxtFileLine(String fileLine, String parameterName){
-        return fileLine.substring(parameterName.length(), fileLine.length());
+        return fileLine.substring(parameterName.length());
     }
 }

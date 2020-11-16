@@ -4,6 +4,7 @@ import model.Taxpayer;
 import org.junit.After;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -41,7 +42,7 @@ public class TaxpayerTests {
      * amounts and compare them with the expected ones.
      **/
     @Test
-    public void testTaxCalculationResult() {
+    public void testTaxCalculationResult() throws FileNotFoundException {
         Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), TestFilenameList);
 
         double actualTax = databaseInstance.getTaxpayersArrayList().get(0).getTax();

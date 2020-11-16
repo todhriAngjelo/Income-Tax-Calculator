@@ -9,15 +9,10 @@ import java.util.Scanner;
 
 public class XmlFileInput extends InputSystem{
 
-    public void loadTaxpayersDataFromXmlFileIntoDatabase(String afmInfoFileFolderPath, String afmInfoFile){
+    public void loadTaxpayersDataFromXmlFileIntoDatabase(
+            String afmInfoFileFolderPath, String afmInfoFile) throws FileNotFoundException{
 
-        Scanner inputStream;
-        try {
-            inputStream = super.createInputStream(afmInfoFileFolderPath, afmInfoFile);
-        } catch ( FileNotFoundException e) {
-            e.printStackTrace();
-            return; //TODO return an error code to handle the error from the client.
-        }
+        Scanner inputStream = super.createInputStream(afmInfoFileFolderPath, afmInfoFile);
 
         String taxpayerName = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Name> ", " </Name>");
         String taxpayerAFM = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<AFM> ", " </AFM>");
@@ -51,6 +46,6 @@ public class XmlFileInput extends InputSystem{
     }
 
     private static String getParameterValueFromXmlFileLine(String fileLine, String parameterStartField, String parameterEndField){
-        return fileLine.substring(parameterStartField.length(), fileLine.length()-parameterEndField.length());
+        return fileLine.substring(parameterStartField.length(), fileLine.length() - parameterEndField.length());
     }
 }

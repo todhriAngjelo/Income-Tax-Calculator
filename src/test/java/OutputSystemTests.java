@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -53,7 +54,7 @@ public class OutputSystemTests {
      * to the actual values in memory.
      */
     @Test
-    public void testReceiptPieChart(){
+    public void testReceiptPieChart() throws FileNotFoundException {
         Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
         Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
         double actualBasicSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.BASIC_RECEIPT);
@@ -69,7 +70,7 @@ public class OutputSystemTests {
     }
 
     @Test
-    public void testTaxAnalysisBarChart(){
+    public void testTaxAnalysisBarChart() throws FileNotFoundException {
         Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
         Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
         double actualTax = taxpayer.getTax();

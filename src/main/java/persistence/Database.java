@@ -5,6 +5,7 @@ import model.Taxpayer;
 import utils.ApplicationErrors;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +13,9 @@ import java.util.List;
 public class Database {
 	private String taxpayersInfoFilesPath;
 	private ArrayList<Taxpayer> taxpayersArrayList = new ArrayList<>();
-	private static Database databaseInstance = new Database();
+	private static final Database databaseInstance = new Database();
 
-	private Database(){
-
-	}
+	private Database() {}
 
 	public static Database getDatabaseInstance() {
 		return databaseInstance;
@@ -34,7 +33,8 @@ public class Database {
 		return this.taxpayersInfoFilesPath;
 	}
 	
-	public static void processTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> inputFiles){
+	public static void processTaxpayersDataFromFilesIntoDatabase(
+			String afmInfoFilesFolderPath, List<String> inputFiles) throws FileNotFoundException {
 
 		for (String inputFile : inputFiles)
 		{
