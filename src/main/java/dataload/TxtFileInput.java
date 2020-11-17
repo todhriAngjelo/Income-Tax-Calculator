@@ -1,51 +1,29 @@
 package dataload;
 
-import persistence.Database;
 import model.Receipt;
-import model.Taxpayer;
 
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TxtFileInput extends InputSystem {
 
+    public TxtFileInput(String[] tags) {
+        super(tags);
+    }
 
-    public void loadTaxpayerDataFromTxtFileIntoDatabase(
-            String afmInfoFileFolderPath, String afmInfoFile) throws FileNotFoundException {
-
-        Scanner inputStream = super.createInputStream(afmInfoFileFolderPath, afmInfoFile);
-
-        String taxpayerName = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Name: ");
-        String taxpayerAFM = getParameterValueFromTxtFileLine(inputStream.nextLine(), "AFM: ");
-        String taxpayerStatus = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Status: ");
-        String taxpayerIncome = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Income: ");
-        Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerStatus, taxpayerIncome);
-
-        String fileLine;
-        while (inputStream.hasNextLine())
-        {
-            fileLine = inputStream.nextLine();
+    @Override
+    public ArrayList<Receipt> extractTaxpayerReceiptsFromFile(Scanner inputStream) {
+        String[] tags = getTags();
+        ArrayList<Receipt> receipts = new ArrayList<>();
+        while (inputStream.hasNextLine()) {
+            String fileLine = inputStream.nextLine();
             if (fileLine.equals("")) continue;
-            if (fileLine.contains("Receipts:")) continue;
+            if (fileLine.contains(tags[8])) continue;
 
-            String receiptID = getParameterValueFromTxtFileLine(fileLine, "Receipt ID: ");
-            String receiptDate = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Date: ");
-            String receiptKind = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Kind: ");
-            String receiptAmount = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Amount: ");
-            String receiptCompany = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Company: ");
-            String receiptCountry = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Country: ");
-            String receiptCity = getParameterValueFromTxtFileLine(inputStream.nextLine(), "City: ");
-            String receiptStreet = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Street: ");
-            String receiptNumber = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Number: ");
-            Receipt newReceipt = new Receipt(receiptKind, receiptID, receiptDate, receiptAmount, receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
-
-            newTaxpayer.addReceiptToList(newReceipt);
+            receipts.add(createReceiptFromFile(inputStream, fileLine));
         }
-
-        Database.getDatabaseInstance().addTaxpayerToList(newTaxpayer);
+        return receipts;
     }
 
-    private static String getParameterValueFromTxtFileLine(String fileLine, String parameterName){
-        return fileLine.substring(parameterName.length());
-    }
+
 }

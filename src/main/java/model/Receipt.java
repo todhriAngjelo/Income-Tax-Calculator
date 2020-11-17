@@ -10,7 +10,9 @@ public class Receipt {
 	protected String date;
 	protected double amount;
 	protected Company company;
-	
+
+	public Receipt() {}
+
 	public Receipt(String kind, String id, String date, String amount,
 				   String name, String country, String city, String street, String number) {
 		switch (kind.toLowerCase()) {

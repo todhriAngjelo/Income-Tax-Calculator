@@ -2,6 +2,7 @@ package persistence;
 import dataload.*;
 import exporters.*;
 import model.Taxpayer;
+import utils.ApplicationConstants;
 import utils.ApplicationErrors;
 
 import java.io.File;
@@ -39,12 +40,12 @@ public class Database {
 		for (String inputFile : inputFiles)
 		{
 			if (inputFile.endsWith(".txt")){
-				TxtFileInput txtFileInputInput = new TxtFileInput();
-				txtFileInputInput.loadTaxpayerDataFromTxtFileIntoDatabase(afmInfoFilesFolderPath, inputFile);
+				TxtFileInput txtFileInputInput = new TxtFileInput(ApplicationConstants.txtTags);
+				txtFileInputInput.loadTaxpayersDataFromFileIntoDatabase(afmInfoFilesFolderPath, inputFile);
 			}
 			else if (inputFile.endsWith(".xml")){
-				XmlFileInput xmlFileInputInput = new XmlFileInput();
-				xmlFileInputInput.loadTaxpayersDataFromXmlFileIntoDatabase(afmInfoFilesFolderPath, inputFile);
+				XmlFileInput xmlFileInputInput = new XmlFileInput(ApplicationConstants.xmlTags);
+				xmlFileInputInput.loadTaxpayersDataFromFileIntoDatabase(afmInfoFilesFolderPath, inputFile);
 			} else {
 				throw new IllegalArgumentException(
 						ApplicationErrors.INPUT_FILE_TYPE_ERROR

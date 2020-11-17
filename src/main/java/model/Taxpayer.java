@@ -20,7 +20,6 @@ public class Taxpayer {
 		this.familyStatus = FamilyStatus.getFamilyStatusInstance( familyStatus.trim() );
 		this.income = Double.parseDouble( income.trim() );
 		this.tax = calculateTax();
-		receipts = new ArrayList<>();
 	}
 	
 	public double calculateTax() {

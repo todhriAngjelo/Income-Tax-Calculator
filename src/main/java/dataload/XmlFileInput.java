@@ -1,51 +1,27 @@
 package dataload;
 
-import persistence.Database;
 import model.Receipt;
-import model.Taxpayer;
-
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class XmlFileInput extends InputSystem{
 
-    public void loadTaxpayersDataFromXmlFileIntoDatabase(
-            String afmInfoFileFolderPath, String afmInfoFile) throws FileNotFoundException{
-
-        Scanner inputStream = super.createInputStream(afmInfoFileFolderPath, afmInfoFile);
-
-        String taxpayerName = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Name> ", " </Name>");
-        String taxpayerAFM = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<AFM> ", " </AFM>");
-        String taxpayerStatus = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Status> ", " </Status>");
-        String taxpayerIncome = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Income> ", " </Income>");
-        Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerStatus, taxpayerIncome);
-
-        String fileLine;
-        while (inputStream.hasNextLine())
-        {
-            fileLine = inputStream.nextLine();
-            if (fileLine.equals("")) continue;
-            if (fileLine.contains("<Receipts>")) continue;
-            if (fileLine.contains("</Receipts>")) break;
-
-            String receiptID = getParameterValueFromXmlFileLine(fileLine, "<ReceiptID> ", " </ReceiptID>");
-            String receiptDate = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Date> ", " </Date>");
-            String receiptKind = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Kind> ", " </Kind>");
-            String receiptAmount = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Amount> ", " </Amount>");
-            String receiptCompany = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Company> ", " </Company>");
-            String receiptCountry = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Country> ", " </Country>");
-            String receiptCity = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<City> ", " </City>");
-            String receiptStreet = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Street> ", " </Street>");
-            String receiptNumber = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Number> ", " </Number>");
-            Receipt newReceipt = new Receipt(receiptKind, receiptID, receiptDate, receiptAmount, receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
-
-            newTaxpayer.addReceiptToList(newReceipt);
-        }
-
-        Database.getDatabaseInstance().addTaxpayerToList(newTaxpayer);
+    public XmlFileInput(String[] tags) {
+        super(tags);
     }
 
-    private static String getParameterValueFromXmlFileLine(String fileLine, String parameterStartField, String parameterEndField){
-        return fileLine.substring(parameterStartField.length(), fileLine.length() - parameterEndField.length());
+    @Override
+    public ArrayList<Receipt> extractTaxpayerReceiptsFromFile(Scanner inputStream) {
+        String[] tags = getTags();
+        ArrayList<Receipt> receipts = new ArrayList<>();
+        while (inputStream.hasNextLine()) {
+            String fileLine = inputStream.nextLine();
+            if (fileLine.equals("")) continue;
+            if (fileLine.contains(tags[8])) continue;
+            if (fileLine.contains(tags[9])) break;
+
+            receipts.add(createReceiptFromFile(inputStream, fileLine));
+        }
+        return receipts;
     }
 }
