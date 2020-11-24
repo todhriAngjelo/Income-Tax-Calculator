@@ -1,3 +1,5 @@
+import exporters.TxtFileOutput;
+import exporters.XmlFileOutput;
 import org.apache.commons.io.FileExistsException;
 import org.junit.Before;
 import persistence.Database;
@@ -117,7 +119,7 @@ public class InputSystemTests {
         Path expectedLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"expected_130456093_LOG.txt");
         File expected = new File(expectedLogFilePath.toString());
         Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        OutputSystem.saveTaxpayerInfoToTxtLogFile(databaseInstance.getTaxpayersInfoFilesPath(), 0);
+        TxtFileOutput.getTxtFileOutputInstance().saveTaxpayerInfoLogFile(databaseInstance.getTaxpayersInfoFilesPath(), 0);
         Path actualLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"130456093_LOG.txt");
         File actual = new File(actualLogFilePath.toString());
 
@@ -135,7 +137,7 @@ public class InputSystemTests {
         Path expectedLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"expected_130456093_LOG.xml");
         File expected = new File(expectedLogFilePath.toString());
         Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        OutputSystem.saveTaxpayerInfoToXmlLogFile(databaseInstance.getTaxpayersInfoFilesPath(),0);
+        XmlFileOutput.getXmlFileOutputInstance().saveTaxpayerInfoLogFile(databaseInstance.getTaxpayersInfoFilesPath(),0);
         Path actualLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"130456093_LOG.xml");
         File actual = new File (actualLogFilePath.toString());
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),

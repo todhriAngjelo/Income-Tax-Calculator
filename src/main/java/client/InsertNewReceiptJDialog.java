@@ -22,7 +22,7 @@ public class InsertNewReceiptJDialog extends JDialog {
 
 	public InsertNewReceiptJDialog(final int taxpayerID) {
 
-		setResizable(false);
+		setResizable(true);
 		setBounds(100, 100, 310, 530);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);

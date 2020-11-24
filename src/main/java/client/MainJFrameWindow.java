@@ -40,7 +40,7 @@ public class MainJFrameWindow {
 	
 	private void initialize() {
 		taxationMainWindowJFrame = new JFrame();
-		taxationMainWindowJFrame.setResizable(false);
+		taxationMainWindowJFrame.setResizable(true);
 		taxationMainWindowJFrame.setTitle("Diaxirisi forologias");
 		taxationMainWindowJFrame.setBounds(-1, -1, 357, 228);
 		taxationMainWindowJFrame.setLocationRelativeTo(null);

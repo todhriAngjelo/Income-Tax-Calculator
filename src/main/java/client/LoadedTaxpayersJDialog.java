@@ -1,4 +1,6 @@
 package client;
+import exporters.TxtFileOutput;
+import exporters.XmlFileOutput;
 import persistence.Database;
 import exporters.OutputSystem;
 
@@ -188,7 +190,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
-					    OutputSystem.saveTaxpayerInfoToTxtLogFile(savePath, taxpayerIndex);
+					    TxtFileOutput.getTxtFileOutputInstance().saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
 						JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
@@ -209,7 +211,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
-					    OutputSystem.saveTaxpayerInfoToXmlLogFile(savePath, taxpayerIndex);
+					    XmlFileOutput.getXmlFileOutputInstance().saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
 						JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}

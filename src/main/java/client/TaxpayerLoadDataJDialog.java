@@ -29,7 +29,7 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 
 	public TaxpayerLoadDataJDialog(final JFrame appMainWindow) {
 
-		setResizable(false);
+		setResizable(true);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setType(Type.NORMAL);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

@@ -25,7 +25,7 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 	public TaxpayerReceiptsManagementJDialog(String windowTitle, final int taxpayerID) {
 		this.taxpayerID = taxpayerID;
 		
-		setResizable(false);
+		setResizable(true);
 		setBounds(100, 100, 480, 460);
 		getContentPane().setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
