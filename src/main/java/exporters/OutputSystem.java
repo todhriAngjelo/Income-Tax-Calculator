@@ -22,34 +22,12 @@ import utils.ApplicationConstants;
 
 public abstract class OutputSystem {
 
-	private static DefaultPieDataset receiptPieChartDataset;
-	private static JFreeChart receiptPieJFreeChart;
-	private static PiePlot piePlot;
-
-	public static DefaultPieDataset getReceiptPieChartDataset() {
-		return receiptPieChartDataset;
-	}
-
-	public static JFreeChart getReceiptPieJFreeChart() {
-		return receiptPieJFreeChart;
-	}
-
-	public static PiePlot getPiePlot() {
-		return piePlot;
-	}
-
-	public static ChartFrame getReceiptPieChartFrame() {
-		return receiptPieChartFrame;
-	}
-
-	private static ChartFrame receiptPieChartFrame;
-
 	public abstract void saveUpdatedTaxpayerInputFile(String filePath, int taxpayerIndex);
 
 	public abstract void saveTaxpayerInfoLogFile(String folderSavePath, int taxpayerIndex);
 
 	public static void createTaxpayerReceiptsPieJFreeChart(int taxpayerIndex){
-		receiptPieChartDataset = new DefaultPieDataset();
+		DefaultPieDataset receiptPieChartDataset = new DefaultPieDataset();
 		Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 
 		receiptPieChartDataset.setValue("Basic", taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.BASIC_RECEIPT));
@@ -58,12 +36,12 @@ public abstract class OutputSystem {
 		receiptPieChartDataset.setValue("Health", taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.HEALTH_RECEIPT));
 		receiptPieChartDataset.setValue("Other", taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.OTHER_RECEIPT));
 
-		receiptPieJFreeChart = ChartFactory.createPieChart("Receipt Pie Chart", receiptPieChartDataset);
-		piePlot = (PiePlot)receiptPieJFreeChart.getPlot();
+		JFreeChart receiptPieJFreeChart = ChartFactory.createPieChart("Receipt Pie Chart", receiptPieChartDataset);
+		PiePlot piePlot = (PiePlot) receiptPieJFreeChart.getPlot();
 		PieSectionLabelGenerator generator = new StandardPieSectionLabelGenerator("{0}: {1}$ ({2})", new DecimalFormat("0.00"), new DecimalFormat("0.00%"));
 		piePlot.setLabelGenerator(generator);
 
-		receiptPieChartFrame = new ChartFrame(Database.getDatabaseInstance().getTaxpayerNameAfmValuesPairList(taxpayerIndex), receiptPieJFreeChart);
+		ChartFrame receiptPieChartFrame = new ChartFrame(Database.getDatabaseInstance().getTaxpayerNameAfmValuesPairList(taxpayerIndex), receiptPieJFreeChart);
 		receiptPieChartFrame.pack();
 		receiptPieChartFrame.setResizable(false);
 		receiptPieChartFrame.setLocationRelativeTo(null);
