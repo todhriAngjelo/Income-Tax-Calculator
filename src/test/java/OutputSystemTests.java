@@ -1,9 +1,8 @@
-import exporters.TxtFileOutput;
-import exporters.XmlFileOutput;
+import export.TxtFileOutput;
+import export.XmlFileOutput;
 import persistence.Database;
 import model.Receipt;
 import model.Taxpayer;
-import exporters.OutputSystem;
 
 import utils.ApplicationConstants;
 

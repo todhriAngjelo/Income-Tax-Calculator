@@ -1,4 +1,4 @@
-package exporters;
+package export;
 
 import model.Receipt;
 import model.Taxpayer;

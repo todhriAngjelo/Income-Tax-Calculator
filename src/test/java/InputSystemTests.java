@@ -1,7 +1,5 @@
-import exporters.TxtFileOutput;
-import exporters.XmlFileOutput;
-import org.apache.commons.io.FileExistsException;
-import org.junit.Before;
+import export.TxtFileOutput;
+import export.XmlFileOutput;
 import persistence.Database;
 import model.Receipt;
 import model.Taxpayer;
@@ -11,7 +9,6 @@ import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-import exporters.OutputSystem;
 import utils.ApplicationConstants;
 import java.io.File;
 import java.io.FileNotFoundException;
