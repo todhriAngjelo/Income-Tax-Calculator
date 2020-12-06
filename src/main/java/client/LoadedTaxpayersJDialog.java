@@ -2,7 +2,7 @@ package client;
 import export.TxtFileOutput;
 import export.XmlFileOutput;
 import persistence.Database;
-import visualize.DataVisualizer;
+import visualize.TaxpayerDataVisualizer;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -159,7 +159,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				int taxpayerIndex = loadedTaxpayersJList.getSelectedIndex();
 				if (taxpayerIndex!=-1){
-					DataVisualizer.createTaxpayerReceiptsPieJFreeChart(taxpayerIndex);
+					TaxpayerDataVisualizer.createTaxpayerReceiptsPieJFreeChart(taxpayerIndex);
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "den exeis epilexei forologoumeno apo th lista.", "sfalma", JOptionPane.WARNING_MESSAGE);
@@ -171,7 +171,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				int taxpayerIndex = loadedTaxpayersJList.getSelectedIndex();
 				if (taxpayerIndex!=-1){
-					DataVisualizer.createTaxpayerTaxAnalysisBarJFreeChart(taxpayerIndex);
+					TaxpayerDataVisualizer.createTaxpayerTaxAnalysisBarJFreeChart(taxpayerIndex);
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "den exeis epilexei forologoumeno apo th lista.", "sfalma", JOptionPane.WARNING_MESSAGE);

@@ -16,7 +16,7 @@ import utils.ApplicationConstants;
 import java.awt.*;
 import java.text.DecimalFormat;
 
-public class DataVisualizer {
+public class TaxpayerDataVisualizer {
     public static void createTaxpayerReceiptsPieJFreeChart(int taxpayerIndex){
         DefaultPieDataset receiptPieChartDataset = new DefaultPieDataset();
         Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
