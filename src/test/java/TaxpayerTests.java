@@ -1,8 +1,10 @@
+import model.Receipt;
 import persistence.Database;
 import model.Taxpayer;
 
 import org.junit.After;
 import org.junit.Test;
+import utils.ApplicationConstants;
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
@@ -52,6 +54,23 @@ public class TaxpayerTests {
         double expectedFinalTax = BigDecimal.valueOf( expectedTax + 0.08 * expectedTax ).doubleValue();
 
         assert  expectedTax == actualTax && expectedFinalTax == actualFinalTax;
+    }
+
+    /**
+     * To test the taxpayer final tax after adding a receipt we add a dummy receipt to the receipts list and
+     * we check the new final tax with the actual one
+     **/
+    @Test
+    public void testTaxCalculationResultOnAdd() throws FileNotFoundException {
+        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), TestFilenameList);
+
+        Taxpayer taxpayer = databaseInstance.getTaxpayersArrayList().get(0);
+
+        Receipt dummyReceipt =
+                new Receipt(ApplicationConstants.BASIC_RECEIPT, "2", "25/2/2020", "5000",
+                        "Hand Made Clothes", "Greece", "Ioannina", "Kaloudi", "10");
+        taxpayer.addReceiptToList(dummyReceipt);
+        assert  taxpayer.getFinalTax() ==  taxpayer.getTax() + 0.04 * taxpayer.getTax();
     }
 
 }
