@@ -3,7 +3,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ InputSystemTests.class, TaxpayerTests.class, OutputSystemTests.class })
+@SuiteClasses({ InputSystemTests.class, TaxpayerTests.class, OutputSystemTests.class, TaxpayerDataVisualizerTests.class })
 public class TestSuite {
     //no need to add sth here. The above directives simply run all tests
 }

@@ -157,25 +157,24 @@ public class Taxpayer {
 
 	public void calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts() {
 		double totalReceiptsAmount = 0;
+		taxIncrease = 0;
+		taxDecrease = 0;
 		for (Receipt receipt : receipts){
 			totalReceiptsAmount += receipt.getAmount();
 		}
 
 		if (  totalReceiptsAmount  < 0.2 * income ) {
 			taxIncrease = tax * 0.08;
-			finalTax = tax + taxIncrease;
 		}
 		else if ( totalReceiptsAmount < 0.4 * income ) {
 			taxIncrease = tax * 0.04;
-			finalTax = tax + taxIncrease;
 		}
 		else if ( totalReceiptsAmount < 0.6 * income ) {
 			taxDecrease = tax * 0.15;
-			finalTax = tax - taxDecrease;
 		}
 		else {
 			taxDecrease = tax * 0.30;
-			finalTax = tax - taxDecrease;
 		}
+		finalTax = tax + taxIncrease - taxDecrease;
 	}
 }

@@ -11,7 +11,6 @@ import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -50,44 +49,13 @@ public class OutputSystemTests {
         Database.getDatabaseInstance().setTaxpayersArrayList(new ArrayList<Taxpayer>());
     }
 
-    /**
-     * To test the methods that create charts we will compare the expected content values of the charts
-     * to the actual values in memory.
-     */
-    @Test
-    public void testReceiptPieChart() throws FileNotFoundException {
-        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
-        double actualBasicSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.BASIC_RECEIPT);
-        double actualEntertainmentSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.ENTERTAINMENT_RECEIPT);
-        double actualHealthSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.HEALTH_RECEIPT);
-        double actualTravelSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.TRAVEL_RECEIPT);
-        double actualOtherSum = taxpayer.getReceiptsTotalAmountByType(ApplicationConstants.OTHER_RECEIPT);
-        assertEquals(2000, actualBasicSum, 0.00);
-        assertEquals(0, actualEntertainmentSum, 0.00);
-        assertEquals(0, actualHealthSum, 0.00);
-        assertEquals(0, actualTravelSum, 0.00);
-        assertEquals(0, actualOtherSum, 0.00);
-    }
-
-    @Test
-    public void testTaxAnalysisBarChart() throws FileNotFoundException {
-        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
-        double actualTax = taxpayer.getTax();
-        double actualFinalTax = taxpayer.getFinalTax();
-        double actualTaxVariationAmount = taxpayer.getTaxIncrease() != 0 ? taxpayer.getTaxIncrease() : taxpayer.getTaxDecrease()*(-1);
-        assertEquals(1207.495, actualTax, 0);
-        assertEquals(1304.0946, actualFinalTax, 0);
-        assertEquals(96.5996, actualTaxVariationAmount, 0);
-    }
 
     /**
      * To test the saveUpdatedTaxpayerTxtFile when deleting a receipt
      * we create an updated Taxpayer txt file and compare it to the actual one.
      */
     @Test
-    public void testSaveUpdatedTaxpayerTxtFileOndDelete() throws IOException {
+    public void testSaveUpdatedTaxpayerTxtFileOnDelete() throws IOException {
         Path expectedUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"expected_deleteReceipt.txt");
         File expected = new File(expectedUpdatedFilePath.toString());
 
