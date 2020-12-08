@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public abstract class InputSystem {
+public class InputSystem {
 	private final String[] tags;
 
 	public String[] getTags() {
@@ -53,7 +53,19 @@ public abstract class InputSystem {
 				receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
 	}
 
-	public abstract ArrayList<Receipt> extractTaxpayerReceiptsFromFile(Scanner inputStream);
+	public ArrayList<Receipt> extractTaxpayerReceiptsFromFile(Scanner inputStream) {
+		String[] tags = getTags();
+		ArrayList<Receipt> receipts = new ArrayList<>();
+		while (inputStream.hasNextLine()) {
+			String fileLine = inputStream.nextLine();
+			if (fileLine.equals("")) continue;
+			if (fileLine.trim().contains(tags[8])) continue;
+			if (fileLine.trim().equals(tags[9])) break;
+
+			receipts.add(createReceiptFromFile(inputStream, fileLine));
+		}
+		return receipts;
+	}
 
 	public void loadTaxpayersDataFromFileIntoDatabase(
 			String afmInfoFileFolderPath,

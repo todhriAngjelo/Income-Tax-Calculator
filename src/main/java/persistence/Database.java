@@ -40,11 +40,11 @@ public class Database {
 		for (String inputFile : inputFiles)
 		{
 			if (inputFile.endsWith(".txt")){
-				TxtFileInput txtFileInputInput = new TxtFileInput(ApplicationConstants.txtTags);
+				InputSystem txtFileInputInput = new InputSystem(ApplicationConstants.txtTags);
 				txtFileInputInput.loadTaxpayersDataFromFileIntoDatabase(afmInfoFilesFolderPath, inputFile);
 			}
 			else if (inputFile.endsWith(".xml")){
-				XmlFileInput xmlFileInputInput = new XmlFileInput(ApplicationConstants.xmlTags);
+				InputSystem xmlFileInputInput = new InputSystem(ApplicationConstants.xmlTags);
 				xmlFileInputInput.loadTaxpayersDataFromFileIntoDatabase(afmInfoFilesFolderPath, inputFile);
 			} else {
 				throw new IllegalArgumentException(
