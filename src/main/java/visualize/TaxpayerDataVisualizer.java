@@ -17,7 +17,8 @@ import java.awt.*;
 import java.text.DecimalFormat;
 
 public class TaxpayerDataVisualizer {
-    public static void createTaxpayerReceiptsPieJFreeChart(int taxpayerIndex){
+
+    public void createTaxpayerReceiptsPieJFreeChart(int taxpayerIndex){
         DefaultPieDataset receiptPieChartDataset = new DefaultPieDataset();
         Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 
@@ -40,7 +41,7 @@ public class TaxpayerDataVisualizer {
         receiptPieChartFrame.setVisible(true);
     }
 
-    public static void createTaxpayerTaxAnalysisBarJFreeChart(int taxpayerIndex){
+    public void createTaxpayerTaxAnalysisBarJFreeChart(int taxpayerIndex){
         DefaultCategoryDataset taxAnalysisBarChartDataset = new DefaultCategoryDataset();
         Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 

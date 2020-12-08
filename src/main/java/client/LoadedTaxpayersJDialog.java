@@ -159,7 +159,8 @@ public class LoadedTaxpayersJDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				int taxpayerIndex = loadedTaxpayersJList.getSelectedIndex();
 				if (taxpayerIndex!=-1){
-					TaxpayerDataVisualizer.createTaxpayerReceiptsPieJFreeChart(taxpayerIndex);
+					TaxpayerDataVisualizer visualizer = new TaxpayerDataVisualizer();
+					visualizer.createTaxpayerReceiptsPieJFreeChart(taxpayerIndex);
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "den exeis epilexei forologoumeno apo th lista.", "sfalma", JOptionPane.WARNING_MESSAGE);
@@ -171,7 +172,8 @@ public class LoadedTaxpayersJDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				int taxpayerIndex = loadedTaxpayersJList.getSelectedIndex();
 				if (taxpayerIndex!=-1){
-					TaxpayerDataVisualizer.createTaxpayerTaxAnalysisBarJFreeChart(taxpayerIndex);
+					TaxpayerDataVisualizer visualizer = new TaxpayerDataVisualizer();
+					visualizer.createTaxpayerTaxAnalysisBarJFreeChart(taxpayerIndex);
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "den exeis epilexei forologoumeno apo th lista.", "sfalma", JOptionPane.WARNING_MESSAGE);
