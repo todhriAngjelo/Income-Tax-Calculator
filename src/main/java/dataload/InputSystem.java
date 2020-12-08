@@ -13,10 +13,6 @@ import java.util.Scanner;
 public class InputSystem {
 	private final String[] tags;
 
-	public String[] getTags() {
-		return tags;
-	}
-
 	public InputSystem(String[] tags) {
 		this.tags = tags;
 	}
@@ -54,7 +50,6 @@ public class InputSystem {
 	}
 
 	public ArrayList<Receipt> extractTaxpayerReceiptsFromFile(Scanner inputStream) {
-		String[] tags = getTags();
 		ArrayList<Receipt> receipts = new ArrayList<>();
 		while (inputStream.hasNextLine()) {
 			String fileLine = inputStream.nextLine();
