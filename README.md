@@ -1,33 +1,45 @@
-# Minessota Income tax Calculator
+# Minnesota Income tax Calculator
 
-A fully working Income tax Calculator project using [Maven](https://maven.apache.org/).
-
-To build it, you will need to download and unpack the latest (or recent) version of Maven (https://maven.apache.org/download.cgi)
-and put the `mvn` command on your path.
-Then, you will need to install a Java 1.8 (or higher) JDK (not JRE!), and make sure you can run `java` from the command line.
-Now you can run `mvn clean install` and Maven will compile your project, 
-and put the results it in a jar file in the `target` directory.
-
-How you run this code is up to you, but usually you would start by using an IDE like [Intellij IDEA](https://www.jetbrains.com/idea/), or [Eclipse](https://eclipse.org/ide/).
-
-The Maven dependencies may lag behind the official releases a bit.
+## Reengineering the legacy code
 
 
-# A couple of Maven commands
+The goal of this project is to reengineer a legacy Java application. At a glance, serves for the 
+income tax calculation of the Minnesota state citizens. The tax calculation accounts for the marital
+status of a given citizen, his income, and the amount of money that he has spend, as witnessed by a
+set of receipts declared along with the income. The legacy application takes as input txt or xml 
+files that contain the necessary data for each citizen. The tax calculation is based on a complex 
+algorithm provided by the Minnesota state. The application further produces graphical representation
+s of the data in terms of bar and pie charts. Finally. the application produces respective output 
+reports in txt or xml.
 
-Once you have configured your project in your IDE you can build it from there. However if you prefer you can use maven from the command line. In that case you could be interested in this short list of commands:
+Legacy code Smells:
+- The Taxpayer class has a lot of code duplication.
 
-* `mvn compile`: it will just compile the code of your application and tell you if there are errors
-* `mvn test`: it will compile the code of your application and your tests. It will then run your tests (if you wrote any) and let you know if some fails
-* `mvn install`: it will do everything `mvn test` does and then if everything looks file it will install the library or the application into your local maven repository (typically under <USER FOLDER>/.m2). In this way you could use this library from other projects you want to build on the same machine
 
-If you need more information please take a look [here](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html).
+- The Taxpayer class suffers from [primitive obsession](https://refactoring.guru/smells/primitive-obsession). 
+A lot of constants for the income limits and income tax rates, are used to calculate the tax of the Taxpayer. 
+The values of these constants depend on the value of the family status attribute. Essentially the family status acts 
+as a typecode for different kinds of Taxpayers.
 
-# Run Application
 
-You can run the compiled and packaged JAR with the following command:
-- `java -cp target/Minnesota-Income-Tax-Calculation-1.0-SNAPSHOT.jar client.MainJFrameWindow`
+- The different subclasses of Receipt are [lazy classes](https://refactoring.guru/smells/lazy-class). 
 
-or if you have specified the mainClass attribute in the Manifest:
-- `java -jar target/Minnesota-Income-Tax-Calculation-1.0-SNAPSHOT.jar`
+
+- The Database, the InputSystem and the OutputSystem classes do not really follow the object-oriented style. 
+The main problem is that all of them just define a bunch of static methods that operate on static class attributes. 
+All these static methods and attributes prevent further refactoring that will allow to separate the class responsibilities 
+into smaller classes and get rid of code duplication by extracting abstract classes and template methods.
+
+
+- The InputSystem class has too many responsibilities. It is used to parse two different formats (XML and TXT).
+
+
+- The OutputSystem class has too many responsibilities. It is used to generate reports in two different formats. 
+Moreover, it creates the graphical representation of the data (pie charts, bar charts and so on).
+
+
+### Reengineering
+- We added [Maven](https://maven.apache.org/) to handle the project dependencies, build and test process.
+- We fixed all the Smells. See the repo [wiki](https://github.com/AlexandrosAlexiou/Income-Tax-Calculator/wiki) for more details
+about the refactoring.
 
