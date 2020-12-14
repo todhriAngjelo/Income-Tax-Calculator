@@ -1,7 +1,7 @@
 package client;
-import export.TxtFileOutput;
-import export.XmlFileOutput;
+import export.OutputSystem;
 import persistence.Database;
+import utils.ApplicationConstants;
 import visualize.TaxpayerDataVisualizer;
 
 import java.awt.Color;
@@ -20,7 +20,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.FileNotFoundException;
 
 public class LoadedTaxpayersJDialog extends JDialog {
@@ -195,7 +194,8 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
 					    try {
-							TxtFileOutput.getTxtFileOutputInstance().saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
+							OutputSystem txtFileOutput = new OutputSystem("txt", ApplicationConstants.txtTags);
+							txtFileOutput.saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
 							JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
 						} catch(FileNotFoundException exception) {
 							JOptionPane.showMessageDialog(null, "Provlima", "mynhma", JOptionPane.ERROR_MESSAGE);
@@ -220,7 +220,8 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
 					    try {
-							XmlFileOutput.getXmlFileOutputInstance().saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
+							OutputSystem xmlFileOutput = new OutputSystem("xml", ApplicationConstants.xmlTags);
+							xmlFileOutput.saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
 							JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
 						} catch (FileNotFoundException exception) {
 							JOptionPane.showMessageDialog(null, "Provlima apothukeusis", "sfalma", JOptionPane.ERROR_MESSAGE);

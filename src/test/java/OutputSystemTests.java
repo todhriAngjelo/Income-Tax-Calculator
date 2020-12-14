@@ -1,5 +1,4 @@
-import export.TxtFileOutput;
-import export.XmlFileOutput;
+import export.OutputSystem;
 import persistence.Database;
 import model.Receipt;
 import model.Taxpayer;
@@ -63,9 +62,10 @@ public class OutputSystemTests {
         Taxpayer taxpayer = databaseInstance.getTaxpayerFromArrayList(0);
         taxpayer.removeReceiptFromList(0);
 
-        Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"testFile");
+        Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"testFile.txt");
         File actual = new File (actualUpdatedFilePath.toString());
-        TxtFileOutput.getTxtFileOutputInstance().saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(),0);
+        OutputSystem txtFileOutput = new OutputSystem("txt", ApplicationConstants.txtTags);
+        txtFileOutput.saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(),0);
 
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
                 FileUtils.readLines(actual, StandardCharsets.UTF_8));
@@ -91,7 +91,8 @@ public class OutputSystemTests {
         Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(), "testFile.txt");
         File actual = new File (actualUpdatedFilePath.toString());
 
-        TxtFileOutput.getTxtFileOutputInstance().saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(), 0);
+        OutputSystem txtFileOutput = new OutputSystem("txt", ApplicationConstants.txtTags);
+        txtFileOutput.saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(), 0);
 
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
                 FileUtils.readLines(actual, StandardCharsets.UTF_8));
@@ -100,7 +101,7 @@ public class OutputSystemTests {
 
     /**
      * To test the saveUpdatedTaxpayerXmlFile when deleting a receipt
-     * we create an updated Taxpayer .xml file and compare it to the actual one.
+     * we create an updated Taxpayer.xml file and compare it to the actual one.
      */
     @Test
     public  void testSaveUpdatedTaxpayerXmlFileOnDelete() throws IOException {
@@ -113,7 +114,8 @@ public class OutputSystemTests {
 
         Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"testFile.xml");
         File actual = new File (actualUpdatedFilePath.toString());
-        XmlFileOutput.getXmlFileOutputInstance().saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(),0);
+        OutputSystem xmlFileOutput = new OutputSystem("xml", ApplicationConstants.xmlTags);
+        xmlFileOutput.saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(),0);
 
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
                 FileUtils.readLines(actual, StandardCharsets.UTF_8));
@@ -138,8 +140,8 @@ public class OutputSystemTests {
         File expected = new File(expectedUpdatedFilePath.toString());
         Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(), "testFile.xml");
         File actual = new File (actualUpdatedFilePath.toString());
-
-        XmlFileOutput.getXmlFileOutputInstance().saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(), 0);
+        OutputSystem xmlFileOutput = new OutputSystem("xml", ApplicationConstants.xmlTags);
+        xmlFileOutput.saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(), 0);
 
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
                 FileUtils.readLines(actual, StandardCharsets.UTF_8));

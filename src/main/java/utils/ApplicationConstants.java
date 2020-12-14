@@ -61,7 +61,9 @@ public class ApplicationConstants {
     public static final String[] txtTags = new String[] {
             "Name:", "", "AFM:", "", "Status:", "", "Income:", "",
             "Receipts:", "", "Receipt ID:", "", "Date:",  "", "Kind:", "", "Amount:", "",
-            "Company:", "", "Country:", "", "City:", "", "Street:", "", "Number:", ""
+            "Company:", "", "Country:", "", "City:", "", "Street:", "", "Number:", "", "Income:", "",
+            "Basic Tax:", "", "Tax Increase:", "", "Tax Decrease:", "", "Total Tax:", "", "Total Receipts Amount:", "",
+            "Entertainment:", "", "Basic:", "", "Travel:", "", "Health:", "", "Other:", ""
     };
 
     // Xml tags
@@ -69,6 +71,9 @@ public class ApplicationConstants {
             "<Name>", "</Name>", "<AFM>", "</AFM>", "<Status>", "</Status>", "<Income>", "</Income>",
             "<Receipts>", "</Receipts>", "<ReceiptID>", "</ReceiptID>", "<Date>",  "</Date>", "<Kind>", "</Kind>",
             "<Amount>", "</Amount>", "<Company>", "</Company>", "<Country>", "</Country>", "<City>", "</City>",
-            "<Street>", "</Street>", "<Number>", "</Number>"
+            "<Street>", "</Street>", "<Number>", "</Number>", "<Income>", "</Income>", "<BasicTax>", "</BasicTax>",
+            "<TaxIncrease>", "</TaxIncrease>", "<TaxDecrease>", "</TaxDecrease>", "<TotalTax>", "</TotalTax>",
+            "<Entertainment>", "</Entertainment>", "<Basic>", "</Basic>", "<Travel>", "</Travel>", "<Health>", "</Health>",
+            "<Other>", "</Other>"
     };
 }

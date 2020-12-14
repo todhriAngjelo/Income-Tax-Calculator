@@ -102,10 +102,12 @@ public class Database {
 			if (!file.getName().contains(this.taxpayersArrayList.get(index).getAfm())) continue;
 			
 			if (file.getName().toLowerCase().endsWith(".txt")){
-				TxtFileOutput.getTxtFileOutputInstance().saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
+				OutputSystem txtFileOutput = new OutputSystem("txt", ApplicationConstants.txtTags);
+				txtFileOutput.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			if (file.getName().toLowerCase().endsWith(".xml")){
-				XmlFileOutput.getXmlFileOutputInstance().saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
+				OutputSystem xmlFileOutput = new OutputSystem("xml", ApplicationConstants.xmlTags);
+				xmlFileOutput.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			break;
 		}

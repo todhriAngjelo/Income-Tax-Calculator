@@ -1,5 +1,4 @@
-import export.TxtFileOutput;
-import export.XmlFileOutput;
+import export.OutputSystem;
 import persistence.Database;
 import model.Receipt;
 import model.Taxpayer;
@@ -103,42 +102,5 @@ public class InputSystemTests {
 
         assertEquals(expectedTaxpayerReceiptFromXml.toString(), actualTaxpayerInfoXml.getReceipts().get(0).toString());
         assertEquals(expectedTaxpayerInfoFromXml.toString(), actualTaxpayerInfoXml.toString());
-
-    }
-
-    /**
-     * To test if the .txt info files are written correctly
-     * we create a .txt info file and compare it to the expected one.
-     */
-    @Test
-    public void testTxtLogFile() throws IOException {
-
-        Path expectedLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"expected_130456093_LOG.txt");
-        File expected = new File(expectedLogFilePath.toString());
-        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        TxtFileOutput.getTxtFileOutputInstance().saveTaxpayerInfoLogFile(databaseInstance.getTaxpayersInfoFilesPath(), 0);
-        Path actualLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"130456093_LOG.txt");
-        File actual = new File(actualLogFilePath.toString());
-
-        assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
-                FileUtils.readLines(actual, StandardCharsets.UTF_8));
-        actual.delete();
-    }
-
-    /**
-     * To test if the .xml info files are written correctly
-     * we create a .xml info file and compare it to the expected one.
-     */
-    @Test
-    public void testXmlLogFile() throws IOException {
-        Path expectedLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"expected_130456093_LOG.xml");
-        File expected = new File(expectedLogFilePath.toString());
-        Database.processTaxpayersDataFromFilesIntoDatabase(databaseInstance.getTaxpayersInfoFilesPath(), txtTestFilenameList);
-        XmlFileOutput.getXmlFileOutputInstance().saveTaxpayerInfoLogFile(databaseInstance.getTaxpayersInfoFilesPath(),0);
-        Path actualLogFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"130456093_LOG.xml");
-        File actual = new File (actualLogFilePath.toString());
-        assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
-                FileUtils.readLines(actual, StandardCharsets.UTF_8));
-        actual.delete();
     }
 }
