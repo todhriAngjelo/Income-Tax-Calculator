@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
 
 public class InsertNewReceiptJDialog extends JDialog {
 
@@ -186,9 +187,11 @@ public class InsertNewReceiptJDialog extends JDialog {
 							dateTextField.getText(), amountTextField.getText(), companyTextField.getText(),
 							countryTextField.getText(), cityTextField.getText(), streetTextField.getText(), numberTextField.getText());
 					Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerID).addReceiptToList(newReceipt);
-					
-					Database.getDatabaseInstance().updateTaxpayerInputFile(taxpayerID);
-					
+					try {
+						Database.getDatabaseInstance().updateTaxpayerInputFile(taxpayerID);
+					} catch (FileNotFoundException exception) {
+						JOptionPane.showMessageDialog(null, "Provlima prosthikis neas eggrafhs", "Sfalma", JOptionPane.ERROR_MESSAGE);
+					}
 					dispose();
 				}else{
 					JOptionPane.showMessageDialog(null, "Yparxoun mh symplhrwmena pedia", "Sfalma", JOptionPane.WARNING_MESSAGE);

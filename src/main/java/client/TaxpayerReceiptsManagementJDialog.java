@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
 
 public class TaxpayerReceiptsManagementJDialog extends JDialog {
 
@@ -103,9 +104,11 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 					int dialogResult = JOptionPane.showConfirmDialog (null, "Diagrafh epilegmenhs apodeixhs("+taxpayerReceiptsJList.getSelectedValue().toString()+") ?", "����������� ���������", JOptionPane.YES_NO_OPTION);
 					if(dialogResult == JOptionPane.YES_OPTION){
 						Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerID).removeReceiptFromList(taxpayerReceiptsJList.getSelectedIndex());
-						
-						Database.getDatabaseInstance().updateTaxpayerInputFile(taxpayerID);
-						
+						try {
+							Database.getDatabaseInstance().updateTaxpayerInputFile(taxpayerID);
+						} catch (FileNotFoundException exception) {
+							JOptionPane.showMessageDialog(null, "Provlima prosthikis neas eggrafhs", "Sfalma", JOptionPane.ERROR_MESSAGE);
+						}
 						fillTaxpayerReceiptsJList();
 					}
 				}else{

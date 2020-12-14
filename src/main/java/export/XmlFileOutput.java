@@ -8,6 +8,7 @@ import utils.ApplicationConstants;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 
 public class XmlFileOutput extends OutputSystem{
     private static final XmlFileOutput xmlFileOutputInstance = new XmlFileOutput();
@@ -19,16 +20,9 @@ public class XmlFileOutput extends OutputSystem{
     }
 
     @Override
-    public void saveUpdatedTaxpayerInputFile(String filePath, int taxpayerIndex){
-        PrintWriter outputStream = null;
-        try
-        {
-            outputStream = new PrintWriter(new FileOutputStream(filePath));
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println("Problem opening: "+filePath);
-        }
+    public void saveUpdatedTaxpayerInputFile(String filePath, int taxpayerIndex) throws FileNotFoundException{
+
+        PrintWriter outputStream = createOutputStream(filePath);
 
         Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
         outputStream.println("<Name> "+taxpayer.getName()+" </Name>");
@@ -60,23 +54,10 @@ public class XmlFileOutput extends OutputSystem{
         outputStream.close();
     }
     @Override
-    public void saveTaxpayerInfoLogFile(String folderSavePath, int taxpayerIndex){
+    public void saveTaxpayerInfoLogFile(String folderSavePath, int taxpayerIndex) throws FileNotFoundException{
         Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 
-        PrintWriter outputStream = null;
-        try
-        {
-            if( !System.getProperty("os.name").contains("Windows") ) {
-                outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "/" + taxpayer.getAfm() + "_LOG.xml"));
-            }
-            else{
-                outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "//" + taxpayer.getAfm() + "_LOG.xml"));
-            }
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println("Problem opening: "+folderSavePath+"//"+taxpayer.getAfm()+"_LOG.xml");
-        }
+        PrintWriter outputStream = createOutputStream(String.valueOf(Paths.get(folderSavePath, taxpayer.getAfm() + "_LOG.xml")));
 
         outputStream.println("<Name> "+taxpayer.getName()+" </Name>");
         outputStream.println("<AFM> "+taxpayer.getAfm()+" </AFM>");
@@ -97,4 +78,9 @@ public class XmlFileOutput extends OutputSystem{
 
         outputStream.close();
     }
+
+    public PrintWriter createOutputStream(String filepath) throws FileNotFoundException {
+        return new PrintWriter(new FileOutputStream(filepath));
+    }
+
 }

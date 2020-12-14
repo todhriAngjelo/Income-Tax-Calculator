@@ -20,6 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class LoadedTaxpayersJDialog extends JDialog {
 
@@ -192,8 +194,12 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
-					    TxtFileOutput.getTxtFileOutputInstance().saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
-						JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
+					    try {
+							TxtFileOutput.getTxtFileOutputInstance().saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
+							JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
+						} catch(FileNotFoundException exception) {
+							JOptionPane.showMessageDialog(null, "Provlima", "mynhma", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 				else{
@@ -213,8 +219,12 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
-					    XmlFileOutput.getXmlFileOutputInstance().saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
-						JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
+					    try {
+							XmlFileOutput.getXmlFileOutputInstance().saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
+							JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
+						} catch (FileNotFoundException exception) {
+							JOptionPane.showMessageDialog(null, "Provlima apothukeusis", "sfalma", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 				else{

@@ -90,7 +90,7 @@ public class Database {
 		return taxpayersNameAfmValuesPairList;
 	}
 	
-	public void updateTaxpayerInputFile(int index){
+	public void updateTaxpayerInputFile(int index) throws FileNotFoundException {
 		File taxpayersInfoFilesPathFileObject = new File(this.taxpayersInfoFilesPath);
 		FilenameFilter fileNameFilter = new FilenameFilter(){
             public boolean accept(File dir, String name) {

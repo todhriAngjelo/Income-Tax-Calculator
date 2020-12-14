@@ -8,6 +8,7 @@ import utils.ApplicationConstants;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 
 public class TxtFileOutput extends OutputSystem {
     private static final TxtFileOutput txtFileOutputInstance = new TxtFileOutput();
@@ -18,16 +19,9 @@ public class TxtFileOutput extends OutputSystem {
         return txtFileOutputInstance;
     }
     @Override
-    public void saveUpdatedTaxpayerInputFile(String filePath, int taxpayerIndex){
-        PrintWriter outputStream = null;
-        try
-        {
-            outputStream = new PrintWriter(new FileOutputStream(filePath));
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println("Problem opening: "+filePath);
-        }
+    public void saveUpdatedTaxpayerInputFile(String filePath, int taxpayerIndex) throws FileNotFoundException {
+
+        PrintWriter outputStream = createOutputStream(filePath);
 
         Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
         outputStream.println("Name: "+taxpayer.getName());
@@ -57,23 +51,10 @@ public class TxtFileOutput extends OutputSystem {
         outputStream.close();
     }
     @Override
-    public void saveTaxpayerInfoLogFile(String folderSavePath, int taxpayerIndex){
+    public void saveTaxpayerInfoLogFile(String folderSavePath, int taxpayerIndex) throws FileNotFoundException{
         Taxpayer taxpayer = Database.getDatabaseInstance().getTaxpayerFromArrayList(taxpayerIndex);
 
-        PrintWriter outputStream = null;
-        try
-        {
-            if( !System.getProperty("os.name").contains("Windows") ) {
-                outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "/" + taxpayer.getAfm() + "_LOG.txt"));
-            }
-            else{
-                outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "//" + taxpayer.getAfm() + "_LOG.txt"));
-            }
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println("Problem opening: "+folderSavePath+"//"+taxpayer.getAfm()+"_LOG.txt");
-        }
+        PrintWriter outputStream = createOutputStream(String.valueOf(Paths.get(folderSavePath, taxpayer.getAfm() + "_LOG.txt")));
 
         outputStream.println("Name: " + taxpayer.getName());
         outputStream.println("AFM: " + taxpayer.getAfm());
@@ -94,4 +75,9 @@ public class TxtFileOutput extends OutputSystem {
 
         outputStream.close();
     }
+
+    public PrintWriter createOutputStream(String filepath) throws FileNotFoundException {
+        return new PrintWriter(new FileOutputStream(filepath));
+    }
 }
+
