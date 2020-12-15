@@ -3,6 +3,8 @@ package dataload;
 import model.Receipt;
 import model.Taxpayer;
 import persistence.Database;
+import utils.ApplicationConstants;
+import utils.FileTypes;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,8 +15,12 @@ import java.util.Scanner;
 public class InputSystem {
 	private final String[] tags;
 
-	public InputSystem(String[] tags) {
-		this.tags = tags;
+	public InputSystem(String filetype) {
+		if (filetype.equals(FileTypes.TXT)) {
+			this.tags = ApplicationConstants.txtTags;
+		} else {
+			this.tags = ApplicationConstants.xmlTags;
+		}
 	}
 
 	public Scanner createInputStream(String afmInfoFileFolderPath, String afmInfoFile) throws FileNotFoundException {
