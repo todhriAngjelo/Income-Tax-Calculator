@@ -2,6 +2,7 @@ package client;
 import export.OutputSystem;
 import persistence.Database;
 import utils.ApplicationConstants;
+import utils.FileTypes;
 import visualize.TaxpayerDataVisualizer;
 
 import java.awt.Color;
@@ -194,7 +195,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
 					    try {
-							OutputSystem txtFileOutput = new OutputSystem("txt", ApplicationConstants.txtTags);
+							OutputSystem txtFileOutput = new OutputSystem(FileTypes.TXT);
 							txtFileOutput.saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
 							JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
 						} catch(FileNotFoundException exception) {
@@ -220,7 +221,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    String savePath = saveFileFolderChooser.getSelectedFile().toString();
 					    try {
-							OutputSystem xmlFileOutput = new OutputSystem("xml", ApplicationConstants.xmlTags);
+							OutputSystem xmlFileOutput = new OutputSystem(FileTypes.XML);
 							xmlFileOutput.saveTaxpayerInfoLogFile(savePath, taxpayerIndex);
 							JOptionPane.showMessageDialog(null, "H apothikeush oloklhrwthike", "mynhma", JOptionPane.INFORMATION_MESSAGE);
 						} catch (FileNotFoundException exception) {

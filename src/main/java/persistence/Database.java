@@ -4,6 +4,7 @@ import export.*;
 import model.Taxpayer;
 import utils.ApplicationConstants;
 import utils.ApplicationErrors;
+import utils.FileTypes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -102,11 +103,11 @@ public class Database {
 			if (!file.getName().contains(this.taxpayersArrayList.get(index).getAfm())) continue;
 			
 			if (file.getName().toLowerCase().endsWith(".txt")){
-				OutputSystem txtFileOutput = new OutputSystem("txt", ApplicationConstants.txtTags);
+				OutputSystem txtFileOutput = new OutputSystem(FileTypes.TXT);
 				txtFileOutput.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			if (file.getName().toLowerCase().endsWith(".xml")){
-				OutputSystem xmlFileOutput = new OutputSystem("xml", ApplicationConstants.xmlTags);
+				OutputSystem xmlFileOutput = new OutputSystem(FileTypes.XML);
 				xmlFileOutput.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			break;

@@ -8,6 +8,7 @@ import utils.ApplicationConstants;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Test;
+import utils.FileTypes;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class OutputSystemTests {
 
         Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"testFile.txt");
         File actual = new File (actualUpdatedFilePath.toString());
-        OutputSystem txtFileOutput = new OutputSystem("txt", ApplicationConstants.txtTags);
+        OutputSystem txtFileOutput = new OutputSystem(FileTypes.TXT);
         txtFileOutput.saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(),0);
 
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
@@ -91,7 +92,7 @@ public class OutputSystemTests {
         Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(), "testFile.txt");
         File actual = new File (actualUpdatedFilePath.toString());
 
-        OutputSystem txtFileOutput = new OutputSystem("txt", ApplicationConstants.txtTags);
+        OutputSystem txtFileOutput = new OutputSystem(FileTypes.TXT);
         txtFileOutput.saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(), 0);
 
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
@@ -114,7 +115,7 @@ public class OutputSystemTests {
 
         Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(),"testFile.xml");
         File actual = new File (actualUpdatedFilePath.toString());
-        OutputSystem xmlFileOutput = new OutputSystem("xml", ApplicationConstants.xmlTags);
+        OutputSystem xmlFileOutput = new OutputSystem(FileTypes.XML);
         xmlFileOutput.saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(),0);
 
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),
@@ -140,7 +141,7 @@ public class OutputSystemTests {
         File expected = new File(expectedUpdatedFilePath.toString());
         Path actualUpdatedFilePath = Paths.get(databaseInstance.getTaxpayersInfoFilesPath(), "testFile.xml");
         File actual = new File (actualUpdatedFilePath.toString());
-        OutputSystem xmlFileOutput = new OutputSystem("xml", ApplicationConstants.xmlTags);
+        OutputSystem xmlFileOutput = new OutputSystem(FileTypes.XML);
         xmlFileOutput.saveUpdatedTaxpayerInputFile(actualUpdatedFilePath.toString(), 0);
 
         assertEquals(FileUtils.readLines(expected, StandardCharsets.UTF_8),

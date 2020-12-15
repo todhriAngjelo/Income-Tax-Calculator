@@ -4,6 +4,7 @@ import model.Receipt;
 import model.Taxpayer;
 import persistence.Database;
 import utils.ApplicationConstants;
+import utils.FileTypes;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -15,8 +16,12 @@ public class OutputSystem {
 	public final String[] tags;
 	public final String filetype;
 
-	public OutputSystem( String filetype, String[] tags) {
-		this.tags = tags;
+	public OutputSystem(String filetype) {
+		if (filetype.equals(FileTypes.TXT)) {
+			this.tags = ApplicationConstants.txtTags;
+		} else {
+			this.tags = ApplicationConstants.xmlTags;
+		}
 		this.filetype = filetype;
 	}
 
